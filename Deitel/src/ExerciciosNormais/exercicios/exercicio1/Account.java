@@ -1,4 +1,4 @@
-package ExerciciosNormais.exercicios.exercicios1;
+package ExerciciosNormais.exercicios.exercicio1;
 
 /**
  *
@@ -12,10 +12,12 @@ public class Account {
     private static final int TAMANHO_DA_SENHA = 4;
     private int senha;
 
-    public Account(String name, int senha, double balance) {
+    public Account(String name, int senha, double balance) throws IllegalArgumentException {
         this.name = name;
-        if (senha > 999 && senha < 10_000) {
+        if (String.valueOf(senha).length() == 4) {
             this.senha = senha;
+        } else {
+            throw new IllegalArgumentException("Senha com mais ou menos de 4 digitos");
         }
         if (balance > 0) {
             this.balance = balance;
@@ -58,6 +60,10 @@ public class Account {
 
     }
 
+    /**
+     *
+     * @return Retorna uma senha criptografada
+     */
     public int importarSenha() {
         int vetor[] = new int[TAMANHO_DA_SENHA];
         int j = 0;
@@ -107,6 +113,12 @@ public class Account {
         return criptografado;
     }
 
+    /**
+     * Descriptografa a senha
+     *
+     * @param criptografado
+     * @param senhaAdministracao
+     */
     public static void verSenha(int criptografado, int senhaAdministracao) {
         int vetor[] = new int[TAMANHO_DA_SENHA];
         int j = 0;
@@ -166,6 +178,9 @@ public class Account {
                     case 9:
                         vetor[i] = 2;
                         break;
+                    case 0:
+                        vetor[i] = 3;
+                        break;
                     default:
                         break;
                 }
@@ -176,5 +191,4 @@ public class Account {
             }
         }
     }
-
 }

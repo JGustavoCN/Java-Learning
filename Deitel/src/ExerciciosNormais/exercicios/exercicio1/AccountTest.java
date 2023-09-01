@@ -1,7 +1,7 @@
-package ExerciciosNormais.exercicios.exercicios1;
+package ExerciciosNormais.exercicios.exercicio1;
 
 //Não precisa do import, pois estao na mesma classe
-import ExerciciosNormais.exercicios.exercicios1.Account;
+import ExerciciosNormais.exercicios.exercicio1.Account;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -57,12 +57,16 @@ public class AccountTest {
                 account2.getName(),
                 account2.getBalance());
          */
-
-        Account conta1 = new Account("Gustavo",1245,100)
-                , conta2 = null;
-//        displayAccount(conta1);
+        Account conta1 = new Account("Gustavo", 3333, 100), conta2 = null;
+//        displayAccount(conta2);
         System.out.println(conta1.importarSenha());
         Account.verSenha(conta1.importarSenha(), 12345);
+        System.out.println("");
+        System.out.println(criptografar(1234));
+        
+//        criando um objeto da propria classe para utilizar um metodo nao static
+        AccountTest main = new AccountTest();
+        System.out.println(main.descriptografar(criptografar(1234)));
 
     }
 
@@ -99,4 +103,23 @@ public class AccountTest {
         );
     }
 
+    // Método para criptografar um número de quatro dígitos
+    public static int criptografar(int numero) {
+        int digito1 = (numero / 1000 + 7) % 10;
+        int digito2 = ((numero / 100) % 10 + 7) % 10;
+        int digito3 = ((numero / 10) % 10 + 7) % 10;
+        int digito4 = (numero % 10 + 7) % 10;
+
+        return digito3 * 1000 + digito4 * 100 + digito1 * 10 + digito2;
+    }
+
+    // Método para descriptografar um número criptografado
+    public int descriptografar(int numeroCriptografado) {
+        int digito1 = (numeroCriptografado / 1000 + 3) % 10;
+        int digito2 = ((numeroCriptografado / 100) % 10 + 3) % 10;
+        int digito3 = ((numeroCriptografado / 10) % 10 + 3) % 10;
+        int digito4 = (numeroCriptografado % 10 + 3) % 10;
+
+        return digito3 * 1000 + digito4 * 100 + digito1 * 10 + digito2;
+    }
 }
