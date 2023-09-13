@@ -3,20 +3,23 @@ package Main;
 /**
  * @author José Gustavo
  */
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Monitoria {
 
     public static void main(String[] args) {
 
-        // questao da  monitoria
+        // Questao da  monitoria Terminei?
+       
         Scanner teclado = new Scanner(System.in);
-        int max = 100;
+        int max = 100000;
         int elementos[] = new int[max];
         int maior = 0;
         int repetidos[] = new int[max];
         int maiores_repeticoes[] = new int[max];
         int maior_numero_repeticao = 0;
+        int maior_numero_repeticao_serie = 0;
         int k = 0;
         int a = 0;
 
@@ -45,10 +48,16 @@ public class Main {
             }
 
             if (repetidos[a] > maior_numero_repeticao) {
-                maiores_repeticoes[k] = i;
                 maior_numero_repeticao = repetidos[a];
+                if (maior_numero_repeticao > maior_numero_repeticao_serie) {
+                    k = 0;
+                    Arrays.fill(maiores_repeticoes, 0);
+                }
+                maiores_repeticoes[k] = i;
             } else if (repetidos[a] == maior_numero_repeticao) {
+
                 if (maior_numero_repeticao != 0) {
+                    maior_numero_repeticao_serie = maior_numero_repeticao;
                     ++k;
                     maiores_repeticoes[k] = i;
                 }
@@ -68,7 +77,7 @@ public class Main {
         System.out.println("");
         for (int i : maiores_repeticoes) {
             if (i == 0) {
-                continue;
+                break;
             }
             System.out.print(i + " | ");
         }
