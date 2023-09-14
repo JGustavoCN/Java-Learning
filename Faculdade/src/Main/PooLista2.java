@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -187,19 +189,134 @@ public class PooLista2 {
                 throw new IllegalArgumentException("Esse numero nao corresponde a um mês");
         }
     }
-    
-    public static void faixaEtaria(int idade){
-        boolean ver = true;
-        Boolean crianca = idade < 18;
-        /*
-        switch (ver) {
-            case crianca:
-                
-                break;
-            default:
-                throw new AssertionError();
-        }
-        */
+
+    protected enum FaixaEtaria {
+        CRIANCA, ADOLESCENTE, ADULTO, IDOSO
     }
+
+    private static FaixaEtaria idadeParaFaixaEtaria(int idade) {
+
+        if (idade > 150) {
+            throw new IllegalArgumentException("Idade muito alta (Acima de 150 anos)");
+        }
+        if (idade < 0) {
+            throw new IllegalArgumentException("Idade invalida (Abaixa de 0 anos)");
+        }
+
+        if (idade < 12) {
+            return FaixaEtaria.CRIANCA;
+        } else if (idade < 19) {
+            return FaixaEtaria.ADOLESCENTE;
+        } else if (idade < 65) {
+            return FaixaEtaria.ADULTO;
+        } else {
+            return FaixaEtaria.IDOSO;
+        }
+
+    }
+
+    public static void ImprimefaixaEtaria(int idade) {
+
+        // 4 - Escreva um programa que peça ao usuário para inserir sua idade e 
+        // use switch-case para classificar a pessoa em categorias como "Criança", "Adolescente", "Adulto" e "Idoso"
+        switch (idadeParaFaixaEtaria(idade)) {
+            case CRIANCA:
+                System.out.println("Criança");
+                break;
+            case ADOLESCENTE:
+                System.out.println("Adolescente");
+                break;
+            case ADULTO:
+                System.out.println("Adulto");
+                break;
+            case IDOSO:
+                System.out.println("Idoso");
+                break;
+        }
+
+    }
+
+    protected enum Conceitos {
+        A, B, C, D, F
+    }
+
+    public static Conceitos notaParaConceito(int nota) {
+        if (nota < 0 || nota > 100) {
+            throw new IllegalArgumentException("Nota invalida");
+        }
+        if (nota >= 90) {
+            return Conceitos.A;
+        } else if (nota >= 70) {
+            return Conceitos.B;
+        } else if (nota >= 50) {
+            return Conceitos.C;
+        } else if (nota >= 30) {
+            return Conceitos.D;
+        } else {
+            return Conceitos.F;
+        }
+    }
+
+    public static void imprimeConceito(Enum conceito) {
+        System.out.println(conceito.toString());
+    }
+
+    public static void ImprimeNotaParaConceito(int nota) {
+        // 5 - Crie um programa que converta uma nota numérica (0-100) para um conceito (A, B, C, D, F).
+        // Utilize switch-case para determinar a letra correspondente à nota inserida kek.
+        imprimeConceito(notaParaConceito(nota));
+    }
+
+    public static void MenuProdutos(int opcao, List<String> produtos) {
+        // 6 - Desenvolva um programa que apresente um menu com várias opções (por exemplo, "1. Listar produtos", "2. Adicionar produto", "3. Remover produto").
+        // Use switch-case para lidar com a escolha do usuário e executar a ação correspondente.
+        if(opcao < 1 || opcao > 3) throw new IllegalArgumentException("Opcao do Menu Invalida");
+        System.out.println(
+                "1. Listar produtos\n"+ 
+                "2. Adicionar produto\n"+ 
+                "3. Remover produto\n"
+        );
+        switch (opcao) {
+            case 1:
+                System.out.print("Lista dos Produtos: ");
+                for (String produto : produtos) {
+                    System.out.print(produto+", ");
+                }
+                break;
+            case 2:
+                System.out.print("Adicionar produto: ");
+                produtos.add(teclado.nextLine());
+                break;
+            case 3:
+                System.out.print("Remover produto: ");
+                produtos.remove(teclado.nextLine());
+                break;
+        }
+        
+    }
+    
+    public static void jogoPedraPapelTesoura(){
+        // 7 - Implemente um jogo simples de pedra, papel e tesoura onde o usuário escolhe uma 
+        // das opções e o programa escolhe outra aleatoriamente.
+        // Utilize switch-case para determinar o vencedor da rodada.
+        System.out.println("   Tipos de Jogadas\n(1) Pedra\n(2) Tesoura\n(3) Papel");
+        System.out.println("Escolha sua jogada: ");
+        int jogada = teclado.nextInt();
+        Random random = new Random();
+        int jogadaMaquina = random.nextInt(3)+1;
+        if (jogadaMaquina == jogada){
+        
+            System.out.println("Empate");
+        }else if(jogadaMaquina == 1 && jogada == 3){
+            System.out.println("Vencedor Pessoa");
+        }else if(jogadaMaquina == 2 && jogada == 1){
+            System.out.println("Vencedor Pessoa");
+        }else if(jogadaMaquina == 3 && jogada == 2){
+            System.out.println("Vencedor Pessoa");
+        }else{
+            System.out.println("Vencedor Maquina");
+        }
+    }
+    
 
 }
