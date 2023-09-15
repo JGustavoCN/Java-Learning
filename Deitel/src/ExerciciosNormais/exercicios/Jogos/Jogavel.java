@@ -4,6 +4,6 @@ package ExerciciosNormais.exercicios.Jogos;
  *
  * @author José Gustavo
  */
-public interface Jogar {
+public interface Jogavel {
     void jogar();
 }

@@ -1,4 +1,4 @@
-package Main;
+package Domain;
 
 /**
  * @author José Gustavo

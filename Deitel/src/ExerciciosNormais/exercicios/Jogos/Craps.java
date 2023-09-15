@@ -17,7 +17,7 @@ package ExerciciosNormais.exercicios.Jogos;
  */
 import java.security.SecureRandom;
 
-public class Craps implements Jogar {
+public class Craps implements Jogavel {
 
     private enum Status {
         CONTINUE, WON, LOST
