@@ -1,4 +1,4 @@
-package Domain;
+package poo.listas;
 
 /**
  * @author José Gustavo

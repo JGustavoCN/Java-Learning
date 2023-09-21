@@ -1,4 +1,4 @@
-package Domain;
+package poo.listas;
 
 import java.util.Scanner;
 import java.util.Arrays;
