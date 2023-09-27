@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poo.atividade1;
 
 /**
  *
- * @author Aluno
+ * @author José Gustavo
  */
-public class Pedagogo {
-    
+public class Pedagogo extends Pessoa{
+   
+    // Pedagogo (atributos: registro do tipo int)
+    private int registro;
+   
 }
