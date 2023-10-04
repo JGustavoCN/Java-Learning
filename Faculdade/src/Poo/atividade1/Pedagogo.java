@@ -6,7 +6,16 @@ package poo.atividade1;
  */
 public class Pedagogo extends Pessoa{
    
-    // Pedagogo (atributos: registro do tipo int)
+    // Crie os getters e setters da classe
+    
     private int registro;
+
+    public int getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(int registro) {
+        this.registro = registro;
+    }
    
 }
