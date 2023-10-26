@@ -12,21 +12,38 @@ public class Tiro implements Desenhavel{
     private int x;
     private int y;
     private int velocidade;
+    private int tamanhoX = 3;
+    private int tamanhoY = 15;
     
     public Tiro(int inicioX, int inicioY){
         this.x = inicioX;
         this.y = inicioY;
         this.velocidade = 6;
+        this.tamanhoX = 3;
+        this.tamanhoY = 15;
     }
     
     @Override
     public void paint(Graphics2D g) {
         g.setColor(Color.red);
-        g.fillRect(x, y, 3, 15);
+        g.fillRect(x, y, tamanhoX, tamanhoY);
     }
     
     public void update(){
         this.setY(this.getY() - this.getVelocidade());
+    }
+    
+    
+    public boolean colideCom(Inimigo inimigo) {
+        
+        if (this.x >= inimigo.getX() && this.x + this.tamanhoX <= inimigo.getX() + inimigo.getTamanho()) {
+            if (this.y <= inimigo.getY() + inimigo.getTamanho()) {
+                return true;
+            }
+        }
+        
+        return false;
+
     }
 
     public int getX() {

@@ -25,7 +25,7 @@ public class Nave implements Desenhavel{
             System.out.println("Não carregou a imagem da nave");
             e.printStackTrace();
         }
-        x = 600;
+        x = App.tela.getWidth()/2 -100;
         velocidade = 5;
         carregadoTiro = true;
         carregarTiro = 3;
@@ -36,15 +36,16 @@ public class Nave implements Desenhavel{
         // Desenhando a imagem e modificando o tamanho
         g.drawImage(
                 desenho, 
-                this.getX(), 600, this.getX()+100, 600+100,
-                0,0,desenho.getWidth(), desenho.getHeight(), 
+                this.getX(), App.tela.getHeight() - 150, this.getX()+100, App.tela.getHeight() - 150+100,
+                0,0,
+                desenho.getWidth(), desenho.getHeight(), 
                 null);
     }
 
     public Tiro atirar() {
         this.carregadoTiro = false;
         this.carregarTiro = 0;
-        Tiro tiro = new Tiro(this.getX() + 48, 600);
+        Tiro tiro = new Tiro(this.getX() + 48, App.tela.getHeight() - 150);
         return tiro;
         
     }
