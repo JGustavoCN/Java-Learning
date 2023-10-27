@@ -4,69 +4,69 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Jose Gustavo
  */
-public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
+// Ele é um desenho? 
+// Melhorar
+public class SpaceInvaders extends Jogo{
     
     private Font fonte = new Font("Consolas",Font.BOLD,20);
     private Nave nave;
     private int direcao;
     private List<Tiro> tiros;
     private List<Inimigo> inimigos;
+    private List<Explosao> explosoes;
     private PlanoDeFundo local;
     private boolean ganhou;
-
+    private boolean perdeu;
+    // modificar
+    // Inimigo deve controlar a explosoes
+    private BufferedImage desenhoExplosao;
+    
     public SpaceInvaders() {
         ganhou = false;
         local = new PlanoDeFundo();
         nave = new Nave();
         tiros = new ArrayList<>();
         inimigos = new ArrayList<>();
+        explosoes = new ArrayList<>();
+        
+        // modificar
         BufferedImage desenhoInimigos = null;
+        
         try {
             desenhoInimigos = ImageIO.read(new File("src/ExerciciosGraficos/exercicios/spaceInvaders/imagens/inimigo.png"));
+            desenhoExplosao = ImageIO.read(new File("src/ExerciciosGraficos/exercicios/spaceInvaders/imagens/explosoes2.png"));
         } catch (IOException e) {
             System.out.println("Não carregou a imagem do inimigo");
             e.printStackTrace();
         }
         
         for (int i = 0; i < 60; i++) {
-            
-            inimigos.add(new Inimigo(desenhoInimigos,50 + i%20 * 60, 50 + i/20 * 50,1));
-           
+            inimigos.add(new Inimigo(desenhoInimigos,50 + i%20 * 70, 50 + i/20 * 75,1));
         }
         Thread lacoJogo = new Thread(this); // Importante
         lacoJogo.start();
     }
  
     @Override
-    public void paintComponent(Graphics g2){
-        super.paintComponent(g2); // Apaga o que foi pintado antes
-        
-        // AntiAliasing
-        Graphics2D g = (Graphics2D) g2.create();
-        g.setRenderingHint(
-                RenderingHints.KEY_ANTIALIASING, 
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setRenderingHint(
-                RenderingHints.KEY_TEXT_ANTIALIASING, 
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        
+    public void paint(Graphics2D g) {
         // local
         local.paint(g);
+        
+        for (int i = 0; i < explosoes.size(); i++) {
+            explosoes.get(i).paint(g);
+        }
         // nave
         nave.paint(g);
         
@@ -82,6 +82,18 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
             g.setFont(fonte);
             g.drawString("VOCÊ TERMINOU O JOGO!!!", App.tela.getWidth()/2 - 150, App.tela.getHeight()/2);
         }
+        if (perdeu) {
+            g.setColor(Color.white);
+            g.setFont(fonte);
+            g.drawString("OS INIMIGOS GANHARAM!!!", App.tela.getWidth()/2 - 150, App.tela.getHeight()/2);
+        }
+    }
+    
+    @Override
+    public void paintComponent(Graphics g2){
+        super.paintComponent(g2);
+        Graphics2D g = this.ativarAntiAliasing(g2); 
+        this.paint(g);
     }
         
 
@@ -103,14 +115,17 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
         }
     }
 
-    
-    private void update() {
-        if (inimigos.size() == 0) {
+    @Override
+    public void update() {
+        if (inimigos.isEmpty()) {
             ganhou = true;
         }
-        nave.update(this.getDirecao());
+        nave.movimentar(this.getDirecao());
         for (int i = 0; i < inimigos.size(); i++) {
             inimigos.get(i).update();
+            if (inimigos.get(i).getY()>= App.tela.getHeight() - 150) {
+                perdeu = true;
+            }
             
         }
         for (int i = 0; i < tiros.size(); i++) {
@@ -121,7 +136,9 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
             } else {
                 for (int j = 0; j < inimigos.size(); j++) {
                     if (tiros.get(i).colideCom(inimigos.get(j))) {
+                        explosoes.add(new Explosao(desenhoExplosao, inimigos.get(j).getX(), inimigos.get(j).getY()));
                         inimigos.remove(j);
+                        
                         j--;
                         tiros.remove(i);
                         break;
@@ -139,10 +156,18 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
             }
             
         }
+        for (int i = 0; i < explosoes.size(); i++) {
+            explosoes.get(i).update();
+            
+            if (explosoes.get(i).acabou()) {
+                explosoes.remove(i);
+            }
+        }
         
     }
 
-    private void sleep(long duracao) {
+    @Override
+    public void sleep(long duracao) {
         try {
             Thread.sleep(15);
         } catch (InterruptedException e) {
@@ -205,7 +230,11 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
     }
 
     public void setDirecao(int direcao) {
-        this.direcao = direcao;
+//Esta passando da tela
+        if (this.nave.getX() >= 0 && this.nave.getX() <= App.tela.getWidth()) {
+           
+        }
+         this.direcao = direcao;
     }
 
     public List<Tiro> getTiros() {
@@ -215,7 +244,5 @@ public class SpaceInvaders extends JPanel implements Runnable, KeyListener{
     public void setTiros(List<Tiro> tiros) {
         this.tiros = tiros;
     }
-
-    
     
 }

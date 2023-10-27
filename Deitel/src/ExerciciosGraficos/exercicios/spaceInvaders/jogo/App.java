@@ -10,11 +10,15 @@ import javax.swing.JFrame;
  */
 public class App {
     
-    public static DisplayMode tela = 
-            GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+    public static final DisplayMode tela = 
+                GraphicsEnvironment.
+                        getLocalGraphicsEnvironment().
+                        getDefaultScreenDevice().
+                        getDisplayMode();
+ 
     public static void main(String[] args) {
         JFrame janela = criarJanela();
-        SpaceInvaders jogo = new SpaceInvaders();
+        Jogo jogo = new SpaceInvaders();
         jogo.setBounds(0, 0, tela.getWidth(), tela.getHeight());
         janela.add(jogo);
         janela.addKeyListener(jogo);

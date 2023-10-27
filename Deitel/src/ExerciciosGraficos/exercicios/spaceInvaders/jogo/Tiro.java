@@ -7,37 +7,40 @@ import java.awt.Graphics2D;
  *
  * @author José Gustavo
  */
-public class Tiro implements Desenhavel{
-
-    private int x;
-    private int y;
-    private int velocidade;
-    private int tamanhoX = 3;
-    private int tamanhoY = 15;
+public class Tiro extends Desenho {
     
     public Tiro(int inicioX, int inicioY){
-        this.x = inicioX;
-        this.y = inicioY;
-        this.velocidade = 6;
-        this.tamanhoX = 3;
-        this.tamanhoY = 15;
+//super("src/ExerciciosGraficos/exercicios/spaceInvaders/imagens/tiro.png", "Tiro");
+        this.setX(inicioX);
+        this.setY(inicioY);
+        this.setVelocidade(6);
+        this.setTamanhoX(3);
+        this.setTamanhoY(15);
+      
     }
     
     @Override
     public void paint(Graphics2D g) {
+        
+/*Tentar entender melhor
+        g.drawImage(this.getDesenho(), 
+                this.getX()+100, this.getY(),this.getX(), this.getY()-150,
+                0, 0, this.getY()+this.getDesenho().getWidth(), this.getY()+this.getDesenho().getHeight(), null);
+*/
         g.setColor(Color.red);
-        g.fillRect(x, y, tamanhoX, tamanhoY);
+        g.fillRect(this.getX(), this.getY(), this.getTamanhoX(), this.getTamanhoY());
     }
     
+    @Override
     public void update(){
         this.setY(this.getY() - this.getVelocidade());
     }
     
-    
+    // Posso juntar???
     public boolean colideCom(Inimigo inimigo) {
         
-        if (this.x >= inimigo.getX() && this.x + this.tamanhoX <= inimigo.getX() + inimigo.getTamanho()) {
-            if (this.y <= inimigo.getY() + inimigo.getTamanho()) {
+        if (this.getX() >= inimigo.getX() && this.getX() + this.getTamanhoX() <= inimigo.getX() + inimigo.getTamanhoX()) {
+            if (this.getY() <= inimigo.getY() + inimigo.getTamanhoY()) {
                 return true;
             }
         }
@@ -45,31 +48,7 @@ public class Tiro implements Desenhavel{
         return false;
 
     }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getVelocidade() {
-        return velocidade;
-    }
-
-    public void setVelocidade(int velocidade) {
-        this.velocidade = velocidade;
-    }
-
+// Posso juntar???
     boolean isDestruido() {
         return this.getY() < 0;
     }
