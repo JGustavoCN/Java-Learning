@@ -1,30 +1,21 @@
-package poo.atividade1;
+package poo.projeto;
 
-/**
- *
- * @author José Gustavo
- */
 public class Psicologo extends Pessoa {
-   
-    // Crie os getters e setters da classe
-    
+
     private int crp;
     private String especialidade;
-
-    public int getCrp() {
-        return crp;
-    }
 
     public void setCrp(int crp) {
         this.crp = crp;
     }
-
-    public String getEspecialidade() {
-        return especialidade;
+    public int getCrp() {
+        return this.crp;
     }
-
+    
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
-   
+    public String getEspecialidade() {
+        return this.especialidade;
+    }
 }

@@ -7,55 +7,34 @@ import java.awt.image.BufferedImage;
  *
  * @author José Gustavo
  */
+public class Explosao extends Sprite {
 
-//Melhorar
+//    Passar o desenho que vai ser explodido?
+    public Explosao(BufferedImage desenho, int x, int y, int animacaoTotal, int tamanhoSpriteX, int tamanhoSpriteY) {
+        super(desenho, x, y, animacaoTotal, tamanhoSpriteX, tamanhoSpriteY);
+        this.setVelocidade(1);
+    }
 
-public class Explosao extends Desenho{
-
-    private int duracao;
-    private int animacaoTotal;
-    private int linha;
-    private int coluna;
-    
-    public Explosao(BufferedImage desenho, int x, int y) {
-        super(desenho, x, y);
-        this.animacaoTotal= 25;
-        this.duracao = 0;
-        this.linha = 0;
-        this.coluna = 0;
-        
-    } 
-    
     @Override
     public void paint(Graphics2D g) {
-        int tamannho = 192;
+        int tamanhoExplosao = 50;
         g.drawImage(
-                this.getDesenho(), 
-                this.getX(), this.getY(), 
-                this.getX() + 50, this.getY() + 50, 
-                tamannho * coluna, tamannho* linha,
-                tamannho * coluna + tamannho, tamannho * linha + tamannho,
+                this.getDesenho(),
+                this.getX(), this.getY(),
+                this.getX() + tamanhoExplosao, this.getY() + tamanhoExplosao,
+                this.getColuna(), this.getLinha(),
+                this.getColuna() + this.getTamanhoSpriteX(), this.getLinha() + this.getTamanhoSpriteY(),
                 null);
     }
 
- // Modificar não esta explodindo todas
+    // Modificar não esta explodindo todas
     @Override
     public void update() {
-        this.duracao++;
-        linha = duracao/6;
-        coluna = duracao%5;
+        int quantidadeColunas = 5;
+        int quantidadeLinhas = 5;
+        this.setLinha((this.getDuracao() / quantidadeLinhas) * this.getTamanhoSpriteY());
+        this.setColuna((this.getDuracao() % quantidadeColunas) * this.getTamanhoSpriteX());
+        this.setDuracao(this.getDuracao() + this.getVelocidade());
     }
 
-    public boolean acabou(){
-        return duracao >= animacaoTotal;
-    }
-    
-    public int getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
-    }
-    
 }

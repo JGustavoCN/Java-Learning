@@ -1,47 +1,46 @@
-package poo.atividade1;
+package poo.projeto;
 
-/**
- *
- * @author José Gustavo
- */
 public class Pessoa {
 
-    // Crie os getters e setters da classe
     private String nome;
     private String dataNascimento;
     private String localNascimento;
     private char sexo;
-
-    public String getNome() {
-        return nome;
-    }
+    private int cpf; 
 
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public String getDataNascimento() {
-        return dataNascimento;
+    public String getNome() {
+        return this.nome;
     }
-
+    
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-
-    public String getLocalNascimento() {
-        return localNascimento;
+    public String getDataNascimento() {
+        return this.dataNascimento;
     }
-
+    
     public void setLocalNascimento(String localNascimento) {
         this.localNascimento = localNascimento;
     }
-
-    public char getSexo() {
-        return sexo;
+    public String getLocalNascimento() {
+        return this.localNascimento;
     }
 
     public void setSexo(char sexo) {
         this.sexo = sexo;
     }
+    public char getSexo() {
+        return this.sexo;
+    }  
+
+    public void setCpf(int cpf) {
+        this.cpf = cpf;
+    }    
+    public int getCpf() {
+        return this.cpf;
+    }   
 
 }

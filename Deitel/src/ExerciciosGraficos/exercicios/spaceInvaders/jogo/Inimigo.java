@@ -20,7 +20,7 @@ public class Inimigo extends Desenho {
         this.setTamanhoY(50);
 
     }
-
+    
     @Override
     public void paint(Graphics2D g) {
 

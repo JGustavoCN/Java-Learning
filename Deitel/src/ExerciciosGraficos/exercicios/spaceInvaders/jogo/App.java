@@ -15,13 +15,16 @@ public class App {
                         getLocalGraphicsEnvironment().
                         getDefaultScreenDevice().
                         getDisplayMode();
+    public static JFrame janela;
  
     public static void main(String[] args) {
-        JFrame janela = criarJanela();
+        janela = criarJanela();
         Jogo jogo = new SpaceInvaders();
         jogo.setBounds(0, 0, tela.getWidth(), tela.getHeight());
         janela.add(jogo);
         janela.addKeyListener(jogo);
+        
+        
     }
     
     public static JFrame criarJanela() {

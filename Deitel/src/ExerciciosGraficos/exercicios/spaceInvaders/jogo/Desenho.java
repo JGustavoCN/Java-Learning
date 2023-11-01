@@ -38,6 +38,10 @@ public abstract class Desenho implements Desenhavel, Atualizavel{
         this.y = y;
     }
     
+    public Desenho(BufferedImage desenho) {
+        this.desenho = desenho;
+        
+    }
     public Desenho() {
         
     }
