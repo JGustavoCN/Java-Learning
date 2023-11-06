@@ -1,7 +1,7 @@
 package main;
 
 import poo.listas.PooLista2;
-import poo.projeto.App;
+import poo.projeto.main.App;
 
 /**
  *

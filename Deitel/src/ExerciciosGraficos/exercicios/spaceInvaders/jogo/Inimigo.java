@@ -15,7 +15,7 @@ public class Inimigo extends Desenho {
     public Inimigo(BufferedImage desenho, int inicioX, int inicioY, int direcao) {
         super(desenho,inicioX,inicioY);
         this.direcao = direcao;
-        this.setVelocidade(3);
+        this.setVelocidade(6);
         this.setTamanhoX(50);
         this.setTamanhoY(50);
 

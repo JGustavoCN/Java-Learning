@@ -62,7 +62,7 @@ public class Nave extends Desenho{
         } else if (direcao == TipoDirecao.ESQUERDA.VALOR) {
             this.setX(this.getX()-this.getVelocidade());
         }
-        if (carregarTiro >= 15) {
+        if (carregarTiro >= 20) {
             this.setCarregadoTiro(true);
             this.setCarregarTiro(0);
         }

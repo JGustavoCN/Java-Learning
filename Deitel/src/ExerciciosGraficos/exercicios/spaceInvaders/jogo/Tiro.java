@@ -40,7 +40,7 @@ public class Tiro extends Desenho {
     public boolean colideCom(Inimigo inimigo) {
         
         if (this.getX() >= inimigo.getX() && this.getX() + this.getTamanhoX() <= inimigo.getX() + inimigo.getTamanhoX()) {
-            if (this.getY() <= inimigo.getY() + inimigo.getTamanhoY()) {
+            if (this.getY() >= inimigo.getY() && this.getY() <= inimigo.getY() + inimigo.getTamanhoY()) {
                 return true;
             }
         }

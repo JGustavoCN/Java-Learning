@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
@@ -20,7 +21,10 @@ import javax.imageio.ImageIO;
 // Melhorar
 public class SpaceInvaders extends Jogo {
 
-    private Font fonte = new Font("Consolas", Font.BOLD, 20);
+    Font fonte = new Font("Consolas", Font.BOLD, 20);
+    Som som = new Som();
+    Random random = new Random();
+    Thread lacoJogo;
     private Nave nave;
     private int direcao;
     private List<Tiro> tiros;
@@ -55,10 +59,12 @@ public class SpaceInvaders extends Jogo {
         for (int i = 0; i < 60; i++) {
             inimigos.add(new Inimigo(desenhoInimigos, 50 + i % 20 * 70, 50 + i / 20 * 75, 1));
         }
-        Thread lacoJogo = new Thread(this); // Importante
+
+        lacoJogo = new Thread(this); // Importante
         lacoJogo.start();
     }
-
+    
+    int k = 0;
     @Override
     public void paint(Graphics2D g) {
         // local
@@ -81,31 +87,60 @@ public class SpaceInvaders extends Jogo {
             g.setColor(Color.white);
             g.setFont(fonte);
             g.drawString("VOCÊ TERMINOU O JOGO!!!", App.tela.getWidth() / 2 - 150, App.tela.getHeight() / 2);
+            playSE(Som.GAME_WIN);
+            if (k >= 5) {
+                som.stop();
+            }
+            k++;
         }
+
         if (perdeu) {
             g.setColor(Color.white);
             g.setFont(fonte);
             g.drawString("OS INIMIGOS GANHARAM!!!", App.tela.getWidth() / 2 - 150, App.tela.getHeight() / 2);
+            playSE(Som.GAME_OVER);
+            if (k >= 5) {
+                som.stop();
+            }
+            k++;
         }
+
     }
+    
 
     @Override
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);
         Graphics2D g = this.ativarAntiAliasing(g2);
         this.paint(g);
+        g.dispose();
+    }
+
+    public void playMusic(int i) {
+        som.setFile(i);
+        som.play();
+        som.loop();
+    }
+
+    public void stopMusic() {
+        som.stop();
+    }
+
+    public void playSE(int i) {
+        som.setFile(i);
+        som.play();
     }
 
     @Override
     public void run() {
         // Esquema de qualquer jogo
         while (true) {
-            
+
             long tempoInicial = System.currentTimeMillis();
             update(); // atualizar o jogo
             repaint(); // repintar o jogo
             long tempoFinal = System.currentTimeMillis();
-            
+
             long duracao = 16 - (tempoFinal - tempoInicial);
             if (duracao > 0) {
                 sleep(duracao); // controlar a velociade dos outros dois
@@ -136,10 +171,12 @@ public class SpaceInvaders extends Jogo {
             } else {
                 for (int j = 0; j < inimigos.size(); j++) {
                     if (tiros.get(i).colideCom(inimigos.get(j))) {
+                        playSE(Som.EXPLOSAO);
                         explosoes.add(new Explosao(
-                                desenhoExplosao, 
+                                desenhoExplosao,
                                 inimigos.get(j).getX(), inimigos.get(j).getY(),
-                                25,130,130));
+                                25, 130, 130));
+
                         inimigos.remove(j);
                         j--;
                         tiros.remove(i);
@@ -149,8 +186,13 @@ public class SpaceInvaders extends Jogo {
             }
         }
         for (int i = 0; i < inimigos.size(); i++) {
+            if (i == random.nextInt(inimigos.size() + 75) && inimigos.get(i).getY() >= App.tela.getHeight() / 2) {
+                inimigos.get(i).setVelocidade(10);
+            }
+
             inimigos.get(i).update();
             if (inimigos.get(i).getY() >= App.tela.getHeight() - 150) {
+
                 perdeu = true;
             }
 

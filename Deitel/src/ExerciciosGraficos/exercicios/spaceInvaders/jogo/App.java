@@ -19,8 +19,9 @@ public class App {
  
     public static void main(String[] args) {
         janela = criarJanela();
-        Jogo jogo = new SpaceInvaders();
+        SpaceInvaders jogo = new SpaceInvaders();
         jogo.setBounds(0, 0, tela.getWidth(), tela.getHeight());
+        jogo.playMusic(Som.SPACE_BATTLE);
         janela.add(jogo);
         janela.addKeyListener(jogo);
         
