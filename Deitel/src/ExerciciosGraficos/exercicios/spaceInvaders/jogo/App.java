@@ -1,5 +1,6 @@
 package ExerciciosGraficos.exercicios.spaceInvaders.jogo;
 
+import ExerciciosGraficos.exercicios.tetris.main.AppTetris;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
@@ -18,13 +19,15 @@ public class App {
     public static JFrame janela;
  
     public static void main(String[] args) {
+        AppTetris.main(args);
+        /**
         janela = criarJanela();
         SpaceInvaders jogo = new SpaceInvaders();
         jogo.setBounds(0, 0, tela.getWidth(), tela.getHeight());
         jogo.playMusic(Som.SPACE_BATTLE);
         janela.add(jogo);
         janela.addKeyListener(jogo);
-        
+        **/
         
     }
     
