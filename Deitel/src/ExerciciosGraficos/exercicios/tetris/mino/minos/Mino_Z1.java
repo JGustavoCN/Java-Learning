@@ -8,60 +8,58 @@ import java.awt.Color;
  *
  * @author José Gustavo
  */
-public class Mino_Bar extends Mino {
+public class Mino_Z1 extends Mino {
 
-    public Mino_Bar() {
-        create(Color.CYAN);
+    public Mino_Z1() {
+        create(Color.RED);
     }
 
     @Override
     public void setXY(int x, int y) {
 
-        //   
-        // ° ° ° °
-        //  
+        //   °
+        // ° °
+        // ° 
         b[0].x = x;
         b[0].y = y;
-        b[1].x = b[0].x - Block.SIZE;
-        b[1].y = b[0].y;
-        b[2].x = b[0].x + Block.SIZE;
+        b[1].x = b[0].x;
+        b[1].y = b[0].y - Block.SIZE;
+        b[2].x = b[0].x - Block.SIZE;
         b[2].y = b[0].y;
-        b[3].x = b[0].x + Block.SIZE *2; // x2
-        b[3].y = b[0].y;
+        b[3].x = b[0].x - Block.SIZE;
+        b[3].y = b[0].y + Block.SIZE;
     }
 
     @Override
     public void getDirecao1() {
-
-        //   
-        // ° ° ° °
-        // 
+        //   °
+        // ° °
+        // ° 
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
-        tempB[1].x = b[0].x - Block.SIZE;
-        tempB[1].y = b[0].y;
-        tempB[2].x = b[0].x + Block.SIZE;
+        tempB[1].x = b[0].x;
+        tempB[1].y = b[0].y - Block.SIZE;
+        tempB[2].x = b[0].x - Block.SIZE;
         tempB[2].y = b[0].y;
-        tempB[3].x = b[0].x + Block.SIZE *2; //x2
-        tempB[3].y = b[0].y;
+        tempB[3].x = b[0].x - Block.SIZE;
+        tempB[3].y = b[0].y + Block.SIZE;
 
         updateXY(1);
     }
 
     @Override
     public void getDirecao2() {
-        //  °
-        //  °
-        //  °
-        //  °
+        // ° ° 
+        //   ° °
+        //  
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
-        tempB[1].x = b[0].x;
-        tempB[1].y = b[0].y - Block.SIZE;
+        tempB[1].x = b[0].x + Block.SIZE;
+        tempB[1].y = b[0].y;
         tempB[2].x = b[0].x;
-        tempB[2].y = b[0].y + Block.SIZE;
-        tempB[3].x = b[0].x;
-        tempB[3].y = b[0].y + Block.SIZE  *2; //x2
+        tempB[2].y = b[0].y - Block.SIZE;
+        tempB[3].x = b[0].x - Block.SIZE;
+        tempB[3].y = b[0].y - Block.SIZE;
 
         updateXY(2);
     }
@@ -75,4 +73,5 @@ public class Mino_Bar extends Mino {
     public void getDirecao4() {
         getDirecao2();
     }
+
 }
