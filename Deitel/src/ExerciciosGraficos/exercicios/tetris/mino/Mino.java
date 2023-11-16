@@ -1,5 +1,6 @@
 package ExerciciosGraficos.exercicios.tetris.mino;
 
+import ExerciciosGraficos.exercicios.tetris.main.GamePanel;
 import ExerciciosGraficos.exercicios.tetris.main.KeyHandler;
 import ExerciciosGraficos.exercicios.tetris.main.PlayManager;
 import java.awt.Color;
@@ -117,12 +118,12 @@ public abstract class Mino {
                 }
             }
             for (Block b1 : b) {
-                if (b1.x - Block.SIZE == targetY && b1.y == targetX) {
+                if (b1.x - Block.SIZE == targetX && b1.y == targetY) {
                     leftCollision = true;
                 }
             }
             for (Block b1 : b) {
-                if (b1.x + Block.SIZE == targetY && b1.y == targetX) {
+                if (b1.x + Block.SIZE == targetX && b1.y == targetY) {
                     rightCollision = true;
                 }
             }
@@ -155,6 +156,7 @@ public abstract class Mino {
 
             }
             KeyHandler.upPressed = false;
+            GamePanel.se.playMusic(3, false);
         }
 
         checkMovementCollision();
@@ -192,6 +194,9 @@ public abstract class Mino {
         }
 
         if (bottomCollision) {
+            if (deactivating == false) {
+                GamePanel.se.playMusic(4, false);
+            }
             deactivating = true;
         } else {
             autoDropCounter++;

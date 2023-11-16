@@ -42,6 +42,11 @@ public class PlayManager {
     boolean effectCounterOn;
     int effectCounter;
     List<Integer> effectY = new ArrayList<>();
+    
+    // Score
+    int level = 1;
+    int lines;
+    int score;
 
     public PlayManager() {
         //Main Play Area Frame
@@ -102,6 +107,8 @@ public class PlayManager {
 
             if (currentMino.b[0].x == MINO_START_X && currentMino.b[0].y == MINO_START_Y) {
                 gameOver = true;
+                GamePanel.music.stop();
+                GamePanel.se.playMusic(2, false);
             }
 
             currentMino.deactivating = false;
@@ -124,6 +131,9 @@ public class PlayManager {
         int x = esquerda_x;
         int y = cima_y;
         int blockCount = 0;
+        
+        int linesCounter = 0;
+        
         while (x < direita_x && y < baixo_y) {
 
             for (Block staticBlock : staticBlocks) {
@@ -133,6 +143,7 @@ public class PlayManager {
             }
 
             x += Block.SIZE;
+            
             if (x == direita_x) {
 
                 if (blockCount == 12) {
@@ -147,6 +158,22 @@ public class PlayManager {
                             staticBlocks.remove(i);
                         }
                     }
+                    
+                    // counter
+                    linesCounter++;
+                    lines++;
+                    
+                    if (lines % 10 == 0 && dropInterval > 1) {
+                        
+                        level++;
+                        if (dropInterval > 10) {
+                            dropInterval -= 10;
+                        } else {
+                            dropInterval -= 1;
+                        }
+                        
+                    }
+                    
                     for (Block staticBlock : staticBlocks) {
                         if (staticBlock.y < y) {
                             staticBlock.y += Block.SIZE;
@@ -159,6 +186,13 @@ public class PlayManager {
                 y += Block.SIZE;
             }
 
+        }
+        
+        // add score
+        if (linesCounter > 0) {
+            GamePanel.se.playMusic(1, false);
+            int singleLineScore = 10 * level;
+            score += singleLineScore * linesCounter;
         }
 
     }
@@ -177,6 +211,14 @@ public class PlayManager {
         g2.setFont(new Font("Arial", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x + 60, y + 60);
+        
+        //paint score frame
+        g2.drawRect(x, cima_y, 250, 300);
+        x += 40;
+        y = cima_y + 90;
+        g2.drawString("LEVEL: "+ level, x, y); y +=70;
+        g2.drawString("LINES: "+ lines, x, y); y +=70;
+        g2.drawString("SCORE: "+ score, x, y);
 
         //Paint curremtMino
         if (currentMino != null) {
@@ -198,7 +240,7 @@ public class PlayManager {
                 g2.fillRect(esquerda_x, effect, LARGURA, Block.SIZE);
             }
             // time effect
-            if (effectCounter == 5) {
+            if (effectCounter == 10) {
                 effectCounterOn = false;
                 effectCounter = 0;
                 effectY.clear();

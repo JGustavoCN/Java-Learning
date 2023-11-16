@@ -62,6 +62,7 @@ public class Som {
 
     public void stop() {
         clip.stop();
+        // clip.close(); para musica não ficar repetindo assim posso aquele contador k
     }
 
 }
