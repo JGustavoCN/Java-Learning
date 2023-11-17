@@ -42,32 +42,32 @@ public class PlayManager {
     boolean effectCounterOn;
     int effectCounter;
     List<Integer> effectY = new ArrayList<>();
-    
+
     // Score
     int level = 1;
     int lines;
     int score;
-
+    
     public PlayManager() {
         //Main Play Area Frame
         esquerda_x = (GamePanel.LARGURA / 2) - (LARGURA / 2);
         direita_x = esquerda_x + LARGURA;
         cima_y = 50;
         baixo_y = cima_y + ALTURA;
-
+        
         MINO_START_X = esquerda_x + (LARGURA / 2) - Block.SIZE;
         MINO_START_Y = cima_y + Block.SIZE;
-
+        
         NEXTMINO_START_X = direita_x + 175;
         NEXTMINO_START_Y = cima_y + 500;
-
+        
         currentMino = pickMino();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
-
+        
         nextMino = pickMino();
         nextMino.setXY(NEXTMINO_START_X, NEXTMINO_START_Y);
     }
-
+    
     private Mino pickMino() {
         Mino mino = null;
         int i = new Random().nextInt(7);
@@ -96,7 +96,7 @@ public class PlayManager {
         }
         return mino;
     }
-
+    
     public void update() {
         if (currentMino.active == false) {
             // se currentMino estiver desativado, vai colocar ele nos blocos estatico
@@ -104,30 +104,33 @@ public class PlayManager {
             staticBlocks.add(currentMino.b[1]);
             staticBlocks.add(currentMino.b[2]);
             staticBlocks.add(currentMino.b[3]);
-
+            
             if (currentMino.b[0].x == MINO_START_X && currentMino.b[0].y == MINO_START_Y) {
                 gameOver = true;
                 GamePanel.music.stop();
                 GamePanel.se.playMusic(2, false);
             }
-
+            
             currentMino.deactivating = false;
 
             // trocando os Minos
-            currentMino = nextMino;
-            currentMino.setXY(MINO_START_X, MINO_START_Y);
-            nextMino = pickMino();
-            nextMino.setXY(NEXTMINO_START_X, NEXTMINO_START_Y);
-
-            cheackDelete();
+            if (!gameOver) {
+                currentMino = nextMino;
+                currentMino.setXY(MINO_START_X, MINO_START_Y);
+                nextMino = pickMino();
+                nextMino.setXY(NEXTMINO_START_X, NEXTMINO_START_Y);
+                cheackDelete();
+            }
+            
+            
         } else {
             currentMino.update();
         }
-
+        
     }
-
+    
     private void cheackDelete() {
-
+        
         int x = esquerda_x;
         int y = cima_y;
         int blockCount = 0;
@@ -135,17 +138,17 @@ public class PlayManager {
         int linesCounter = 0;
         
         while (x < direita_x && y < baixo_y) {
-
+            
             for (Block staticBlock : staticBlocks) {
                 if (staticBlock.x == x && staticBlock.y == y) {
                     blockCount++;
                 }
             }
-
+            
             x += Block.SIZE;
             
             if (x == direita_x) {
-
+                
                 if (blockCount == 12) {
 
                     // precisa ser uma lista, devido a quantidade indefinida de linhas que podem ser excluidas
@@ -158,7 +161,7 @@ public class PlayManager {
                             staticBlocks.remove(i);
                         }
                     }
-                    
+
                     // counter
                     linesCounter++;
                     lines++;
@@ -180,23 +183,23 @@ public class PlayManager {
                         }
                     }
                 }
-
+                
                 blockCount = 0;
                 x = esquerda_x;
                 y += Block.SIZE;
             }
-
+            
         }
-        
+
         // add score
         if (linesCounter > 0) {
             GamePanel.se.playMusic(1, false);
             int singleLineScore = 10 * level;
             score += singleLineScore * linesCounter;
         }
-
+        
     }
-
+    
     public void paint(Graphics2D g2) {
 
         //Play Area
@@ -211,14 +214,16 @@ public class PlayManager {
         g2.setFont(new Font("Arial", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x + 60, y + 60);
-        
+
         //paint score frame
         g2.drawRect(x, cima_y, 250, 300);
         x += 40;
         y = cima_y + 90;
-        g2.drawString("LEVEL: "+ level, x, y); y +=70;
-        g2.drawString("LINES: "+ lines, x, y); y +=70;
-        g2.drawString("SCORE: "+ score, x, y);
+        g2.drawString("LEVEL: " + level, x, y);
+        y += 70;
+        g2.drawString("LINES: " + lines, x, y);
+        y += 70;
+        g2.drawString("SCORE: " + score, x, y);
 
         //Paint curremtMino
         if (currentMino != null) {
@@ -245,7 +250,7 @@ public class PlayManager {
                 effectCounter = 0;
                 effectY.clear();
             }
-
+            
         }
 
         // paint pause
@@ -265,7 +270,6 @@ public class PlayManager {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Times New Roman", Font.ITALIC, 60));
         g2.drawString("Simple Tetris", x, y);
-        
         
     }
 }

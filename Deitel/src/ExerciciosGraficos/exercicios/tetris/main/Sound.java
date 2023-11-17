@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -29,7 +27,7 @@ public class Sound {
         try {
             url[0] = new File("src/ExerciciosGraficos/exercicios/tetris/res/white-labyrinth-active.wav").toURI().toURL();
             url[1] = new File("src/ExerciciosGraficos/exercicios/tetris/res/delete line.wav").toURI().toURL();
-            url[2] = new File("src/ExerciciosGraficos/exercicios/tetris/res/gameover(1).wav").toURI().toURL();
+            url[2] = new File("src/ExerciciosGraficos/exercicios/tetris/res/gameover (1).wav").toURI().toURL();
             url[3] = new File("src/ExerciciosGraficos/exercicios/tetris/res/rotation.wav").toURI().toURL();
             url[4] = new File("src/ExerciciosGraficos/exercicios/tetris/res/touch floor.wav").toURI().toURL();
         } catch (MalformedURLException e) {
