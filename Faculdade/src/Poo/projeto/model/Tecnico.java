@@ -1,4 +1,4 @@
-package poo.projeto.domain;
+package Poo.projeto.model;
 
 public class Tecnico extends Pessoa {
 

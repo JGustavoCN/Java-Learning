@@ -1,14 +1,11 @@
 package poo.projeto.main;
 
+import Poo.projeto.model.*;
 import poo.projeto.util.Menu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import poo.projeto.domain.Aluno;
-import poo.projeto.domain.Pedagogo;
-import poo.projeto.domain.Professor;
-import poo.projeto.domain.Psicologo;
-import poo.projeto.domain.Tecnico;
+
 
 public class App {
 
