@@ -1,4 +1,4 @@
-package Poo.projeto.model;
+package br.edu.ifs.poo.projeto.model;
 
 public class Professor extends Pessoa {
     
@@ -18,4 +18,9 @@ public class Professor extends Pessoa {
     public int getQuantDisciplinas() {
         return quantDisciplinas;
     }
+
+    @Override
+	public String toString() {
+		return "\nProfessor" + super.toString() + "Formação = " + formacao + " | Quant. de Disciplinas = " + quantDisciplinas + " ]\n";
+	}
 }

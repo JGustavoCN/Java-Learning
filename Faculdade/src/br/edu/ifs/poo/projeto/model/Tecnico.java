@@ -1,4 +1,4 @@
-package Poo.projeto.model;
+package br.edu.ifs.poo.projeto.model;
 
 public class Tecnico extends Pessoa {
 
@@ -27,4 +27,8 @@ public class Tecnico extends Pessoa {
         return anoDeEntrada;
     }
 
+    @Override
+	public String toString() {
+		return "\nTecnico" + super.toString() + "Cargo = " + cargo + " | Função = " + funcao + " | Ano de Entrada = " + anoDeEntrada + " ]\n";
+	}
 }

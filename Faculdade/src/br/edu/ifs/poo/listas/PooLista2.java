@@ -1,4 +1,4 @@
-package poo.listas;
+package br.edu.ifs.poo.listas;
 
 import java.util.ArrayList;
 import java.util.List;

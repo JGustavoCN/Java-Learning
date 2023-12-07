@@ -1,4 +1,4 @@
-package Poo.projeto.model;
+package br.edu.ifs.poo.projeto.model;
 
 public class Psicologo extends Pessoa {
 
@@ -18,4 +18,9 @@ public class Psicologo extends Pessoa {
     public String getEspecialidade() {
         return this.especialidade;
     }
+
+    @Override
+	public String toString() {
+		return "\nPsicologo" + super.toString() + "CRP = " + crp + " | Especialidade = " + especialidade + " ]\n";
+	}
 }

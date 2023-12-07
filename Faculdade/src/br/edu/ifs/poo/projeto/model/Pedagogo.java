@@ -1,4 +1,4 @@
-package Poo.projeto.model;
+package br.edu.ifs.poo.projeto.model;
 
 public class Pedagogo extends Pessoa {
     
@@ -10,4 +10,9 @@ public class Pedagogo extends Pessoa {
     public int getRegistro() {
         return this.registro;
     }
+
+    @Override
+	public String toString() {
+		return "\nPedagogo" + super.toString() + "Registro = " + registro + " ]\n";
+	}
 }
