@@ -4,80 +4,69 @@ import static br.edu.ifs.ed.Entrada.*;
 
 /**
  *
- * @author Aluno
+ * @author José Gustavo
  */
 public class Vetor {
 
-    protected static int vetor[];
-
+    private static int vetor[];
+    
+    public static int capacidade;
+    
     public static void criar(int capacidade) {
-        if (capacidade <= 0) {
-            throw new IllegalArgumentException("Capacidade ilegal -> " + capacidade);
-        }
+        if (capacidade <= 0) throw new IllegalArgumentException("Capacidade ilegal -> " + capacidade);
+        
         vetor = new int[capacidade];
+        Vetor.capacidade = vetor.length;
         System.out.println("Vetor de tamanho " + capacidade + " criado!!!");
-        for (int i = 0; i < vetor.length; i++) {
-            System.out.print("[ ] ");
-
-        }
+        for (int i = 0; i < vetor.length; i++)System.out.print("[ ] ");
+        
         System.out.println("\n-- Preencha o vetor --");
         for (int i = 0; i < vetor.length; i++) {
             System.out.print("Posição [" + i + "]" + " -> Digite um numero: ");
             vetor[i] = teclado.nextInt();
         }
-        imprimir();
     }
 
     public static int somatorio() {
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
         int soma = 0;
-        for (int i = 0; i < vetor.length; i++) {
-            soma = soma + vetor[i];
-
-        }
+        for (int i = 0; i < vetor.length; i++) soma = soma + vetor[i];
         return soma;
     }
 
-    public static double media() {
-        int soma = 0;
-        for (int i = 0; i < vetor.length; i++) {
-            soma = soma + vetor[i];
-
-        }
-        double media = (double) soma / vetor.length;
-        return media;
-    }
+    public static double media() {return (double)somatorio()/vetor.length;}
     
-    public static int get(int posicao){
+    public static int pegar(int posicao) {
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
+        if (vetor.length < posicao || posicao < 0) throw new ArrayIndexOutOfBoundsException("Posição "+posicao+" fora dos limites da capacidade ("+capacidade+")");
         return vetor[posicao];
     }
     
-    public static void set(int posicao){
-        imprimir();
-        System.out.print("Posição [" + posicao + "]" + " -> Digite um numero: ");
-        vetor[posicao] = teclado.nextInt();
-        imprimir();
-        
+    public static void colocar(int posicao, int valor){
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
+        if (vetor.length < posicao || posicao < 0) throw new ArrayIndexOutOfBoundsException("Posição "+posicao+" fora dos limites da capacidade ("+capacidade+")");
+        vetor[posicao] = valor;
     }
     
-    public static void substituiImparPorZero(){
-        imprimir();
-        for (int i = 0; i < vetor.length; i++) if (vetor[i]%2 != 0) vetor[i] = 0;
-        imprimir();
-    }
+    public static void substituirValorImparPorZero() {for (int i = 0; i < vetor.length; i++) if (vetor[i]%2 != 0) vetor[i] = 0;}
+    
+    public static void substituirPosicaoImparPorZero() {for (int i = 1; i < vetor.length; i = i + 2) vetor[i] = 0;}
     
     public static int maiorValor(){
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
         int maior = vetor[0];
         for (int valor: vetor) if (valor > maior) maior = valor;
         return maior;
     }
     public static int menorValor(){
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
         int menor = vetor[0];
         for (int valor: vetor) if (valor < menor) menor = valor;
         return menor;
     }
     
     public static void imprimir(){
-        if (vetor == null) throw new IllegalArgumentException("Não existe vetor");
+        if (eInexistente()) throw new IllegalArgumentException("Não existe vetor");
         System.out.println("== Vetor ==");
         for (int i = 0; i < vetor.length; i++) {
             System.out.print("[" + vetor[i] + "] ");
@@ -85,4 +74,7 @@ public class Vetor {
         }
         System.out.println("");
     }
+    
+    public static boolean eInexistente(){return vetor == null;}
+    
 }
