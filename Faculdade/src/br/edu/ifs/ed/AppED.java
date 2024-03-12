@@ -1,5 +1,7 @@
 package br.edu.ifs.ed;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -9,25 +11,53 @@ import java.util.Vector;
 public class AppED {
 
     public static void main(String[] args) {
-        testeMatriz();
+        int[][] matriz = new int[5][5];
+        List<Integer> percurso = new ArrayList();
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = i + 1; j < matriz[i].length; j++) {
+                System.out.print("Digite a distancia de [" + (i + 1) + "] para [" + (j + 1) + "]: ");
+                matriz[i][j] = Entrada.teclado.nextInt();
+                matriz[j][i] = matriz[i][j];
+            }
+        }
+        int maxDigitos = maxDigitsMatriz(matriz);
+        for (int[] vetor : matriz) {
+            for (int valor : vetor) {
+                System.out.printf("%"+ maxDigitos+"d ",valor);
+            }
+            System.out.println("");
+        }
+        System.out.println("== Mostre seu percurso dizendo quais foram as cidades visitadas");
+        System.out.println("Digite qualquer valor abaixo de 1 para encerrar o caminho");
+        int cidade;
+        do {            
+            System.out.print("Digite a cidade visitada: ");
+            cidade = Entrada.teclado.nextInt();
+            if (cidade <= 0) break; 
+            percurso.add(cidade);
+        } while (true);
+        int distancia = 0;
+        
+        for (int i = 1; i < percurso.size(); i++) {
+            int linha = percurso.get(i-1)-1;
+            int coluna = percurso.get(i)-1;
+            int tamanho = matriz[linha][coluna];
+            System.out.print(tamanho+" ");
+            distancia = distancia + tamanho;
+            
+        }
+        System.out.println("\nDistancia percorrida: "+distancia);
     }
 
     /* TENTAR PEGAR OS VALORES REPETIDOS E SEPARAR UMA COPIA EM UM NOVO VETOR E 
     TBM ARMAZENAR A QUANTIDADE DE REPETICOES DE CADA
-    
-        Crie em Java uma matriz 3x5 de inteiros,
-preencha a matriz e depois:
-a) Informe se a matriz possui elementos
-repetidos;
-b) A quantidade de números pares;
-c) A quantidade de números ímpares
      */
     public static void testeMatriz() {
         int[][] matriz = new int[3][5];
         int indiceVetorMatriz = 0;
         int[] vetorMatriz = new int[3 * 5];
-        int[] vetorRepetidos = new int[3 * 5];
-        int countRepetidos = 0;
+        String[] vetorRepetidos = new String[3 * 5];
+        int maiorRepeticao = 0;
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 System.out.print("matriz[" + i + "][" + j + "]: ");
@@ -35,52 +65,150 @@ c) A quantidade de números ímpares
                 vetorMatriz[indiceVetorMatriz] = matriz[i][j];
                 indiceVetorMatriz++;
             }
-            
+
         }
+        int maxDigits = maxDigits(vetorMatriz);
         int totalDeValores = matriz.length * matriz[0].length;
         int marcarLinha = 0;
         int quantPares = 0;
         int quantImpares = 0;
         for (int i = 0; i < totalDeValores; i++) {
-            
+
             int linha = i / matriz[0].length;
             int coluna = i % matriz[0].length;
-            
+
             if (linha != marcarLinha) {
                 System.out.println("");
                 marcarLinha++;
             }
-            System.out.print(matriz[linha][coluna] + " ");
-            
-            if (matriz[linha][coluna] % 2 == 0){
+            System.out.printf("%" + maxDigits + "d ", matriz[linha][coluna]);
+
+            if (matriz[linha][coluna] % 2 == 0) {
                 quantPares++;
-            }else{
+            } else {
                 quantImpares++;
             }
-            
+
         }
-        
-        boolean temRepetido = false; 
+
+        boolean temRepetido = false;
+
+        boolean posso = false;
+
+        int k = 0;
         for (int i = 0; i < vetorMatriz.length; i++) {
-            
+
             for (int j = 0; j < vetorMatriz.length; j++) {
+
                 if (vetorMatriz[i] == vetorMatriz[j]) {
-                    for (int k = 0; k < vetorRepetidos.length; k++) {
-                        
+
+                    for (String vetorRepetido : vetorRepetidos) {
+
+                        if (vetorRepetido == null) {
+                            posso = true;
+                            break;
+
+                        } else {
+
+                            if (!vetorRepetido.equals(Integer.toString(vetorMatriz[i]))) {
+
+                                posso = true;
+
+                            } else {
+                                posso = false;
+                                break;
+                            }
+
+                        }
                     }
+                    if (posso) {
+                        maiorRepeticao++;
+                        vetorRepetidos[k] = Integer.toString(vetorMatriz[i]);
+                        k++;
+                        break;
+                    }
+
+                }
+            }
+
+        }
+        int[] vetorQuantidadeRepeticoes = new int[vetorRepetidos.length];
+        k = 0;
+        for (String vetorRepetido : vetorRepetidos) {
+            if (vetorRepetido == null) {
+                break;
+            }
+            for (int j = 0; j < vetorMatriz.length; j++) {
+                if (vetorRepetido.equals(Integer.toString(vetorMatriz[j]))) {
+                    vetorQuantidadeRepeticoes[k]++;
+                }
+            }
+            k++;
+        }
+        maiorRepeticao = vetorQuantidadeRepeticoes[0];
+        for (int i = 1; i < vetorQuantidadeRepeticoes.length; i++) {
+            if (maiorRepeticao < vetorQuantidadeRepeticoes[i]) {
+                maiorRepeticao = vetorQuantidadeRepeticoes[i];
+                if (maiorRepeticao > 2) {
                     temRepetido = true;
                 }
             }
-            
+
         }
-        System.out.println("\nTem repetido? "+ ((temRepetido)?"Sim":"Não"));
-        System.out.println("Quantidade pares: "+ quantPares);
-        System.out.println("Quantidade impares: "+ quantImpares);
-        System.out.println("\nQuantidade de repetidos: "+ countRepetidos);
-        for (int repetido : vetorRepetidos) {
-            System.out.print(repetido+" ");
+        System.out.println("\nTem repetido? " + ((temRepetido) ? "Sim" : "Não"));
+        System.out.println("Quantidade pares: " + quantPares);
+        System.out.println("Quantidade impares: " + quantImpares);
+        System.out.println("Maior quantidade de repeticoes: " + maiorRepeticao);
+
+        System.out.print("Valor unico: ");
+        for (String vetorRepetido : vetorRepetidos) {
+            if (vetorRepetido != null) {
+                System.out.printf("%" + maxDigits + "s ", vetorRepetido);
+            }
         }
-        
+        System.out.println("");
+        System.out.print("Repeticoes:  ");
+        for (int i = 0; i < vetorQuantidadeRepeticoes.length; i++) {
+            if (vetorQuantidadeRepeticoes[i] != 0) {
+                System.out.printf("%" + maxDigits + "d ", vetorQuantidadeRepeticoes[i]);
+            }
+
+        }
+        System.out.println("");
+
+    }
+
+    private static int maxDigitsMatriz(int[][] matriz) {
+        int max = 0;
+        for (int[] vetor : matriz) {
+            for (int num : vetor) {
+                int digits = (int) Math.log10(num) + 1;
+                max = Math.max(max, digits);
+            }
+
+        }
+        return max;
+    }
+
+    private static int maxDigits(int[] vetor) {
+        int max = 0;
+        for (int num : vetor) {
+            int digits = (int) Math.log10(num) + 1;
+            max = Math.max(max, digits);
+        }
+        return max;
+    }
+
+    private static int maxDigits(String[] vetor) {
+        int max = 0;
+        for (String num : vetor) {
+            if (num == null) {
+                break;
+            }
+            int digits = num.length();
+            max = Math.max(max, digits);
+        }
+        return max;
     }
 
     public static void testeVetorAluno() {
