@@ -9,7 +9,7 @@ import java.awt.Rectangle;
  * @author José Gustavo
  */
 public class Block extends Rectangle{
-    public int x,y;
+//    public int x,y;
     public static final int SIZE = 30;
     public Color c;
 

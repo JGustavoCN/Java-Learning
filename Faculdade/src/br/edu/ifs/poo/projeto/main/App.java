@@ -9,16 +9,16 @@ public class App {
 
     public static void main(String[] args) {
 
-        ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
-        ArrayList<Professor> listaProfessor = new ArrayList<Professor>();
-        ArrayList<Psicologo> listaPsicologos = new ArrayList<Psicologo>();
-        ArrayList<Pedagogo> listaPedagogo = new ArrayList<Pedagogo>();
-        ArrayList<Tecnico> listaTecnico = new ArrayList<Tecnico>();
-        ArrayList<Candidato> listaCandidatos = new ArrayList<Candidato>();
-        ArrayList<Responsavel> listaResponsavel = new ArrayList<Responsavel>();
-        ArrayList<Zelador> listaZelador = new ArrayList<Zelador>();
-        ArrayList<Monitor> listaMonitores = new ArrayList<Monitor>();
-        ArrayList<Secretaria> listaSecretaria = new ArrayList<Secretaria>();
+        ArrayList<Aluno> listaAlunos = new ArrayList<>();
+        ArrayList<Professor> listaProfessor = new ArrayList<>();
+        ArrayList<Psicologo> listaPsicologos = new ArrayList<>();
+        ArrayList<Pedagogo> listaPedagogo = new ArrayList<>();
+        ArrayList<Tecnico> listaTecnico = new ArrayList<>();
+        ArrayList<Candidato> listaCandidatos = new ArrayList<>();
+        ArrayList<Responsavel> listaResponsavel = new ArrayList<>();
+        ArrayList<Zelador> listaZelador = new ArrayList<>();
+        ArrayList<Monitor> listaMonitores = new ArrayList<>();
+        ArrayList<Secretaria> listaSecretaria = new ArrayList<>();
 
         String nome;
         String dataNasc;
