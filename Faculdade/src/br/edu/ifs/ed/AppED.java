@@ -2,6 +2,7 @@ package br.edu.ifs.ed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -11,6 +12,83 @@ import java.util.Vector;
 public class AppED {
 
     public static void main(String[] args) {
+        int[] vetor = new int[100000];
+        Random random = new Random();
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = random.nextInt(100);
+
+        }
+        System.out.println("== Com Flag:");
+        bubbleSort(vetor);
+        bubbleSort(vetor);
+        System.out.println("== Sem Flag:");
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = random.nextInt(100);
+
+        }
+        sortBubble(vetor);
+        sortBubble(vetor);
+        
+    }
+
+    public static void sortBubble(int[] vetor) {
+
+        int aux;
+        long fim;
+        long inicio;
+        inicio = System.currentTimeMillis();
+        for (int i = 0; i < vetor.length; i++) {
+            for (int j = i + 1; j < vetor.length; j++) {
+
+                if (vetor[i] > vetor[j]) {
+
+                    aux = vetor[j];
+                    vetor[j] = vetor[i];
+                    vetor[i] = aux;
+                }
+
+            }
+        }
+        fim = System.currentTimeMillis();
+        System.out.println("Tempo = " + (fim - inicio));
+
+    }
+
+    public static void bubbleSort(int[] vetor) {
+        boolean flagTroca = true;
+        int aux;
+        long fim;
+        long inicio;
+        inicio = System.currentTimeMillis();
+        while (flagTroca) {
+            flagTroca = false;
+            for (int i = 0; i < vetor.length - 1; i++) {
+                if (vetor[i] > vetor[i + 1]) {
+
+                    flagTroca = true;
+                    aux = vetor[i];
+                    vetor[i] = vetor[i + 1];
+                    vetor[i + 1] = aux;
+                }
+            }
+
+        }
+        fim = System.currentTimeMillis();
+        System.out.println("Tempo = " + (fim - inicio));
+    }
+
+    public static int verificarVetor(int[] vetor, int num) {
+        int verificacao = -1;
+        for (int i = 0; i < vetor.length; i++) {
+            if (vetor[i] == num) {
+                verificacao = i;
+            }
+        }
+        return verificacao;
+    }
+
+    public static void calcularDistancia() {
+
         int[][] matriz = new int[5][5];
         List<Integer> percurso = new ArrayList();
         for (int i = 0; i < matriz.length; i++) {
@@ -23,30 +101,32 @@ public class AppED {
         int maxDigitos = maxDigitsMatriz(matriz);
         for (int[] vetor : matriz) {
             for (int valor : vetor) {
-                System.out.printf("%"+ maxDigitos+"d ",valor);
+                System.out.printf("%" + maxDigitos + "d ", valor);
             }
             System.out.println("");
         }
         System.out.println("== Mostre seu percurso dizendo quais foram as cidades visitadas");
         System.out.println("Digite qualquer valor abaixo de 1 para encerrar o caminho");
         int cidade;
-        do {            
+        do {
             System.out.print("Digite a cidade visitada: ");
             cidade = Entrada.teclado.nextInt();
-            if (cidade <= 0) break; 
+            if (cidade <= 0) {
+                break;
+            }
             percurso.add(cidade);
         } while (true);
         int distancia = 0;
-        
+
         for (int i = 1; i < percurso.size(); i++) {
-            int linha = percurso.get(i-1)-1;
-            int coluna = percurso.get(i)-1;
+            int linha = percurso.get(i - 1) - 1;
+            int coluna = percurso.get(i) - 1;
             int tamanho = matriz[linha][coluna];
-            System.out.print(tamanho+" ");
+            System.out.print(tamanho + " ");
             distancia = distancia + tamanho;
-            
+
         }
-        System.out.println("\nDistancia percorrida: "+distancia);
+        System.out.println("\nDistancia percorrida: " + distancia);
     }
 
     /* TENTAR PEGAR OS VALORES REPETIDOS E SEPARAR UMA COPIA EM UM NOVO VETOR E 
