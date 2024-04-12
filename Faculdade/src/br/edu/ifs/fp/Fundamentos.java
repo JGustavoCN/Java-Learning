@@ -12,25 +12,39 @@ import java.util.TimeZone;
  * @author José Gustavo
  */
 public class Fundamentos {
-    
+
     static Scanner in = new Scanner(System.in);
-    
+
     public static void main(String[] args) {
-        
-        int value1 = in.nextInt();
-        int value2 = in.nextInt();
-        int value3 = in.nextInt();
-        if (value1 == 20 || value2 == 20 || value3 == 20)
-        
-        System.out.print("Entre com a sentenca: ");
-	String line = in.nextLine();
-        // usar " " e "[ ]+" tem diferença
-	String[] words = line.split("[ ]+");
-	System.out.println("Penultima palavra: "+words[words.length - 2]);
-      
+        System.out.println(parDeMaisc("AbBb"));
         dataHorario();
         asciiUnicode('a');
         infoJava();
+    }
+
+    public static boolean parDeMaisc(String frase) {
+        boolean temParMaisc = false;
+
+        for (int i = 1; i < frase.length(); i++) {
+            
+            if (frase.substring(i - 1, i ).toUpperCase().equals(frase.substring(i - 1, i ))) {
+                if (frase.substring(i, i+1).toUpperCase().equals(frase.substring(i, i+1))) {
+
+                    temParMaisc = true;
+                    break;
+                }
+            }
+
+        }
+        return temParMaisc;
+    }
+
+    public static void stringParaVetor() {
+        System.out.print("Entre com a sentenca: ");
+        String line = in.nextLine();
+        // usar " " e "[ ]+" tem diferença
+        String[] words = line.split("[ ]+");
+        System.out.println("Penultima palavra: " + words[words.length - 2]);
     }
 
     public static void infoJava() {
