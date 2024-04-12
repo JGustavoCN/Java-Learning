@@ -1,4 +1,4 @@
-package br.edu.ifs.ed;
+package br.edu.ifs.ed.ordenacao;
 
 import java.util.Random;
 
