@@ -16,17 +16,86 @@ import br.edu.ifs.poo.projeto.main.App;
  */
 public class Main {
 
-    
-    
+    public static class Posicao {
+
+        int linha;
+        int coluna;
+
+        public Posicao(int linha, int coluna) {
+            this.linha = linha;
+            this.coluna = coluna;
+        }
+
+        public void mover(int linha, int coluna) {
+            this.linha = linha;
+            this.coluna = coluna;
+        }
+    }
+
+    public static boolean verificarCaminho(int[][] matriz, Posicao posicao, Posicao posicaoAnterior) {
+        Posicao posicaoAtual = new Posicao(posicao.linha, posicao.coluna);
+        if (matriz.length - 1 == posicaoAtual.linha && matriz[0].length - 1 == posicaoAtual.coluna) return true;
+        
+        boolean caminhoDireita = false;
+        boolean caminhoBaixo = false;
+        boolean caminhoEsquerda = false;
+        
+        if (posicaoAtual.coluna < matriz[0].length - 1 && posicaoAnterior.coluna != posicaoAtual.coluna + 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna + 1] == 1) {
+            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
+            posicaoAtual.mover(posicaoAtual.linha, posicaoAtual.coluna + 1);
+            caminhoDireita = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        }
+        
+        if (posicaoAtual.linha < matriz.length - 1 && posicaoAnterior.linha != posicaoAtual.linha + 1 && matriz[posicaoAtual.linha + 1][posicaoAtual.coluna] == 1) {
+            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
+            posicaoAtual.mover(posicaoAtual.linha + 1, posicaoAtual.coluna);
+            caminhoBaixo = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        }
+        
+        if (posicaoAtual.coluna > 0 && posicaoAnterior.coluna != posicaoAtual.coluna - 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna - 1] == 1) {
+            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
+            posicaoAtual.mover(posicaoAtual.linha, posicaoAtual.coluna - 1);
+            caminhoEsquerda = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        }
+        
+        return caminhoEsquerda || caminhoBaixo || caminhoDireita;
+
+    }
+
     public static void main(String[] args) {
-          andandoNaVia();
+        //andandoNaVia();
+        
+        int[][] matriz2
+                = {
+                    {1, 1, 0, 0, 0},
+                    {0, 1, 0, 0, 0},
+                    {1, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1},
+                };
+        
+        int[][] matriz1
+                = {
+                    {1, 1, 1, 1},
+                    {0, 0, 0, 1},
+                    {0, 0, 1, 0},
+                    {0, 0, 0, 1},
+                };
+
+        boolean tem = verificarCaminho(matriz1, new Posicao(0, 0), new Posicao(0, 0));
+        
+        if (tem) {
+            System.out.println("OK");
+        } else {
+            System.out.println("NOT OK");
+        }
+        
+
 //        App.main(args);
 //        PooLista2.main(args);
     }
-    
-    
-    
-    public static void andandoNaVia(){
+
+    public static void andandoNaVia() {
         System.out.print("Digite o tamanho: ");
         int tamanho = Entrada.teclado.nextInt();
         int matriz[][] = new int[tamanho][tamanho];
@@ -34,24 +103,34 @@ public class Main {
         Player jogador = new Player();
         for (int[] is : matriz) {
             for (int i : is) {
-                System.out.print(i+" ");
+                System.out.print(i + " ");
             }
             System.out.println("");
         }
-        do {    
+        do {
             clearConsole();
             pintar(matriz, jogador);
             ir(matriz, posicao(matriz, jogador), jogador);
         } while (!cheguei(matriz, jogador));
+        clearConsole();
+        pintar(matriz, jogador);
+        boolean tem = verificarCaminho(matriz, new Posicao(0, 0), new Posicao(0, 0));
         
+                
+        if (tem) {
+            System.out.println("OK");
+        } else {
+            System.out.println("NOT OK");
+        }
     }
-    static enum Local{
-        MEIO_SUPERIOR,MEIO_INFERIOR, CANTO_SUPERIOR_DIREITO, CANTO_SUPERIOR_ESQUERDO, MEIO_ESQUERDO, MEIO, 
-        MEIO_DIREITO,CANTO_INFERIOR_ESQUERDO
-        ,CANTO_INFERIOR_DIREITO
+
+    public static enum Local {
+        MEIO_SUPERIOR, MEIO_INFERIOR, CANTO_SUPERIOR_DIREITO, CANTO_SUPERIOR_ESQUERDO, MEIO_ESQUERDO, MEIO,
+        MEIO_DIREITO, CANTO_INFERIOR_ESQUERDO, CANTO_INFERIOR_DIREITO
     }
-    
-    static class Player{
+
+    public static class Player {
+
         int linha;
         int coluna;
 
@@ -59,85 +138,287 @@ public class Main {
             this.linha = 0;
             this.coluna = 0;
         }
+
         // colocar ele para sbaer qual direcao vai? direita() esquerda() cimaEsquerda()
-        public void mover(int linha, int coluna){
+        public void mover(int linha, int coluna) {
             this.linha = linha;
             this.coluna = coluna;
         }
-        
-    }
-    
-    public final static void clearConsole(){
-        for(int i = 0; i <= 20; i++){
 
-              System.out.println();
+        public void direita() {
+            this.coluna += 1;
+        }
+
+        public void baixo() {
+            this.linha += 1;
+        }
+
+        public void cima() {
+            this.linha -= 1;
+        }
+
+        public void esquerda() {
+            this.coluna -= 1;
+        }
+
+    }
+
+    public final static void clearConsole() {
+        for (int i = 0; i <= 20; i++) {
+
+            System.out.println();
 
         }
- 
+
     }
-    
-    public static void pintar(int[][] matriz, Player player){
-        matriz[player.linha][player.coluna] = 1;
+
+    public static void pintar(int[][] matriz, Player player) {
+
+        matriz[player.linha][player.coluna] += 1;
         for (int[] is : matriz) {
             for (int i : is) {
-                System.out.print(i+" ");
+                System.out.print(i + " ");
             }
             System.out.println("");
         }
     }
-    
-    public static boolean cheguei(int[][]matriz, Player jogador){
-        return jogador.linha == matriz.length-1 && jogador.coluna == matriz[0].length-1;
+
+    public static boolean cheguei(int[][] matriz, Player jogador) {
+        return jogador.linha == matriz.length - 1 && jogador.coluna == matriz[0].length - 1;
     }
-    
-    public static Local posicao(int[][] matriz, Player jogador){
-        Local local = null;
+
+    public static Local posicao(int[][] matriz, Player jogador) {
+
         int linha = jogador.linha;
         int coluna = jogador.coluna;
-        if(linha == 0 && coluna == 0 ){
-            return Local.MEIO_INFERIOR;
-        }else if (linha == 0 && coluna > 0 && coluna < matriz[0].length - 1) {
+        if (linha == 0 && coluna == 0) {
+            return Local.CANTO_SUPERIOR_ESQUERDO;
+        } else if (linha == 0 && coluna > 0 && coluna < matriz[0].length - 1) {
             return Local.MEIO_SUPERIOR;
-        } else if(linha == 0 && coluna == matriz[0].length - 1){
+        } else if (linha == 0 && coluna == matriz[0].length - 1) {
             return Local.CANTO_SUPERIOR_DIREITO;
-        }else if(linha > 0 && linha < matriz.length - 1 && coluna == 0 ){
+        } else if (linha > 0 && linha < matriz.length - 1 && coluna == 0) {
             return Local.MEIO_ESQUERDO;
-        } else if(linha > 0 && linha < matriz.length - 1 && coluna > 0 && coluna < matriz[0].length - 1 ){
+        } else if (linha > 0 && linha < matriz.length - 1 && coluna > 0 && coluna < matriz[0].length - 1) {
             return Local.MEIO;
-        }else if(linha > 0 && linha < matriz.length - 1 && coluna == matriz[0].length ){
+        } else if (linha > 0 && linha < matriz.length - 1 && coluna == matriz[0].length - 1) {
             return Local.MEIO_DIREITO;
-        }else if(linha == matriz.length - 1 && coluna == 0 ){
+        } else if (linha == matriz.length - 1 && coluna == 0) {
             return Local.CANTO_INFERIOR_ESQUERDO;
-        }else if (linha == 0 && coluna > 0 && coluna < matriz[0].length - 1) {
+        } else if (linha == matriz.length - 1 && coluna > 0 && coluna < matriz[0].length - 1) {
             return Local.MEIO_INFERIOR;
-        }else if(linha == matriz.length - 1 && coluna == matriz[0].length ){
+        } else if (linha == matriz.length - 1 && coluna == matriz[0].length - 1) {
             return Local.CANTO_INFERIOR_DIREITO;
+        } else {
+            System.out.println("Posiçao não encontrada");
+            return null;
         }
-        return local;
+
     }
-    
-    
-    
-    public static void ir(int[][] matriz, Local local, Player jogador){
+
+    public static void ir(int[][] matriz, Local local, Player jogador) {
         int caminho;
+        int coluna = jogador.coluna;
+        int linha = jogador.linha;
         switch (local) {
             case CANTO_SUPERIOR_ESQUERDO:
                 caminho = Entrada.random.nextInt(3);
-                if (caminho == 0) {
-                    jogador.mover(jogador.linha, jogador.coluna+1);
-                } else if(caminho == 1){
-                    jogador.mover(jogador.linha+1, jogador.coluna);
-                }else{
-                    jogador.mover(jogador.linha+1, jogador.coluna+1);
+                switch (caminho) {
+                    case 0:
+                        jogador.direita();
+                        break;
+                    case 1:
+                        jogador.baixo();
+                        break;
+                    default:
+                        jogador.direita();
+                        jogador.baixo();
+                        break;
                 }
                 break;
+
+            case MEIO_SUPERIOR:
+                caminho = Entrada.random.nextInt(5);
+                switch (caminho) {
+                    case 0:
+                        jogador.direita();
+                        break;
+                    case 1:
+                        jogador.esquerda();
+                        jogador.baixo();
+                        break;
+                    case 2:
+                        jogador.baixo();
+                        break;
+                    case 3:
+                        jogador.esquerda();
+                        break;
+                    default:
+                        jogador.baixo();
+                        jogador.direita();
+                        break;
+                }
+                break;
+            case CANTO_SUPERIOR_DIREITO:
+                caminho = Entrada.random.nextInt(3);
+                switch (caminho) {
+                    case 0:
+                        jogador.esquerda();
+                        jogador.baixo();
+                        break;
+                    case 1:
+                        jogador.esquerda();
+                        break;
+                    default:
+                        jogador.baixo();
+                        break;
+                }
+                break;
+            case MEIO_ESQUERDO:
+                caminho = Entrada.random.nextInt(5);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.cima();
+                        jogador.direita();
+                        break;
+                    case 2:
+                        jogador.direita();
+                        break;
+                    case 3:
+                        jogador.direita();
+                        jogador.baixo();
+                        break;
+                    default:
+                        jogador.baixo();
+                        break;
+                }
+                break;
+            case MEIO:
+                caminho = Entrada.random.nextInt(8);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.cima();
+                        jogador.direita();
+                        break;
+                    case 2:
+                        jogador.direita();
+                        break;
+                    case 3:
+                        jogador.direita();
+                        jogador.baixo();
+                        break;
+                    case 4:
+                        jogador.esquerda();
+                        break;
+                    case 5:
+                        jogador.esquerda();
+                        jogador.cima();
+                        break;
+                    case 6:
+                        jogador.esquerda();
+                        jogador.baixo();
+                        break;
+                    default:
+                        jogador.baixo();
+                        break;
+                }
+                break;
+            case MEIO_DIREITO:
+                caminho = Entrada.random.nextInt(5);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.esquerda();
+                        jogador.cima();
+                        break;
+                    case 2:
+                        jogador.esquerda();
+                        break;
+                    case 3:
+                        jogador.esquerda();
+                        jogador.baixo();
+                        break;
+                    default:
+                        jogador.baixo();
+                        break;
+                }
+                break;
+            case CANTO_INFERIOR_ESQUERDO:
+                caminho = Entrada.random.nextInt(3);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.cima();
+                        jogador.direita();
+                        break;
+                    default:
+                        jogador.direita();
+                        break;
+                }
+                break;
+            case MEIO_INFERIOR:
+                caminho = Entrada.random.nextInt(5);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.cima();
+                        jogador.direita();
+                        break;
+                    case 2:
+                        jogador.cima();
+                        jogador.esquerda();
+                        break;
+                    case 3:
+                        jogador.esquerda();
+                        break;
+                    default:
+                        jogador.direita();
+                        break;
+                }
+                break;
+            case CANTO_INFERIOR_DIREITO:
+                caminho = Entrada.random.nextInt(3);
+                switch (caminho) {
+                    case 0:
+                        jogador.cima();
+                        break;
+                    case 1:
+                        jogador.cima();
+                        jogador.esquerda();
+                        break;
+
+                    default:
+                        jogador.esquerda();
+                        break;
+                }
+                break;
+
+        }
+        if (jaEsteve(jogador, matriz)) {
+            jogador.mover(linha, coluna);
             
+
         }
     }
-    
-    
-    public static void entrada(){
-        
+
+    public static boolean jaEsteve(Player jogador, int[][] matriz) {
+        return matriz[jogador.linha][jogador.coluna] == 1;
+    }
+
+    public static void entrada() {
+
         Scanner teclado = new Scanner(System.in, "latin1");
         System.out.println(teclado.delimiter());
         System.out.println(teclado.locale());
@@ -153,23 +434,18 @@ public class Main {
         System.out.print("Nome: ");
         nome = teclado.next();
         System.out.println(nome);
-        
-        
-        
+
         System.out.print("Idade: ");
         idade = teclado.nextInt();
-        
+
         System.out.print("Res: ");
         System.out.println(idade);
-        
 
         System.out.print("Nome: ");
         nome = teclado.next();
         System.out.print("Res: ");
         System.out.print(nome);
 
-        
-        
         System.out.println("-------------------------------------");
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader ler = new BufferedReader(isr);
@@ -182,6 +458,5 @@ public class Main {
             e.printStackTrace();
         }
 
-        
     }
 }
