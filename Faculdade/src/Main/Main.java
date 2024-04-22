@@ -32,46 +32,46 @@ public class Main {
         }
     }
 
-    public static boolean verificarCaminho(int[][] matriz, Posicao posicao, Posicao posicaoAnterior) {
-        Posicao posicaoAtual = new Posicao(posicao.linha, posicao.coluna);
+    public static boolean verificarCaminho(int[][] matriz, Posicao posicaoAtual, Posicao posicaoAnterior) {
+        
         if (matriz.length - 1 == posicaoAtual.linha && matriz[0].length - 1 == posicaoAtual.coluna) return true;
         
+        int formatoCaminho = 1;
         boolean caminhoDireita = false;
         boolean caminhoBaixo = false;
         boolean caminhoEsquerda = false;
+        boolean caminhoCima = false;
         
-        if (posicaoAtual.coluna < matriz[0].length - 1 && posicaoAnterior.coluna != posicaoAtual.coluna + 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna + 1] == 1) {
-            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
-            posicaoAtual.mover(posicaoAtual.linha, posicaoAtual.coluna + 1);
-            caminhoDireita = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        if (posicaoAtual.coluna < matriz[0].length - 1 && posicaoAnterior.coluna != posicaoAtual.coluna + 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna + 1] == formatoCaminho) {
+            caminhoDireita = verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
         }
         
-        if (posicaoAtual.linha < matriz.length - 1 && posicaoAnterior.linha != posicaoAtual.linha + 1 && matriz[posicaoAtual.linha + 1][posicaoAtual.coluna] == 1) {
-            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
-            posicaoAtual.mover(posicaoAtual.linha + 1, posicaoAtual.coluna);
-            caminhoBaixo = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        if (posicaoAtual.linha < matriz.length - 1 && posicaoAnterior.linha != posicaoAtual.linha + 1 && matriz[posicaoAtual.linha + 1][posicaoAtual.coluna] == formatoCaminho) {
+            caminhoBaixo = verificarCaminho(matriz, new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
         }
         
-        if (posicaoAtual.coluna > 0 && posicaoAnterior.coluna != posicaoAtual.coluna - 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna - 1] == 1) {
-            posicaoAnterior.mover(posicaoAtual.linha, posicaoAtual.coluna);
-            posicaoAtual.mover(posicaoAtual.linha, posicaoAtual.coluna - 1);
-            caminhoEsquerda = verificarCaminho(matriz, posicaoAtual, posicaoAnterior);
+        if (posicaoAtual.coluna > 0 && posicaoAnterior.coluna != posicaoAtual.coluna - 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna - 1] == formatoCaminho) {
+            caminhoEsquerda = verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
         }
         
-        return caminhoEsquerda || caminhoBaixo || caminhoDireita;
+        if (posicaoAtual.linha > 0 && posicaoAnterior.linha != posicaoAtual.linha - 1 && matriz[posicaoAtual.linha - 1][posicaoAtual.coluna] == formatoCaminho) {
+            caminhoCima = verificarCaminho(matriz, new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
+        }
+        
+        return caminhoEsquerda || caminhoBaixo || caminhoDireita || caminhoCima;
 
     }
 
     public static void main(String[] args) {
-        //andandoNaVia();
+        andandoNaVia();
         
         int[][] matriz2
                 = {
-                    {1, 1, 0, 0, 0},
-                    {0, 1, 0, 0, 0},
-                    {1, 1, 0, 0, 0},
-                    {1, 0, 0, 0, 0},
-                    {1, 1, 1, 1, 1},
+                    {1, 0, 1, 1, 1},
+                    {1, 0, 1, 0, 1},
+                    {1, 0, 1, 0, 1},
+                    {1, 0, 1, 0, 1},
+                    {1, 1, 1, 0, 1},
                 };
         
         int[][] matriz1
@@ -82,7 +82,7 @@ public class Main {
                     {0, 0, 0, 1},
                 };
 
-        boolean tem = verificarCaminho(matriz1, new Posicao(0, 0), new Posicao(0, 0));
+        boolean tem = verificarCaminho(matriz2, new Posicao(0, 0), new Posicao(0, 0));
         
         if (tem) {
             System.out.println("OK");
@@ -406,11 +406,7 @@ public class Main {
                 break;
 
         }
-        if (jaEsteve(jogador, matriz)) {
-            jogador.mover(linha, coluna);
-            
-
-        }
+        
     }
 
     public static boolean jaEsteve(Player jogador, int[][] matriz) {
