@@ -252,7 +252,7 @@ public class PlayManager {
             }
             
         }
-
+ 
         // paint pause
         g2.setColor(Color.YELLOW);
         g2.setFont(g2.getFont().deriveFont(50f));

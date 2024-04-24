@@ -19,29 +19,30 @@ public class App {
     public static JFrame janela;
  
     public static void main(String[] args) {
-        AppTetris.main(args);
-        /**
+       
         janela = criarJanela();
         SpaceInvaders jogo = new SpaceInvaders();
         jogo.setBounds(0, 0, tela.getWidth(), tela.getHeight());
         jogo.playMusic(Som.SPACE_BATTLE);
         janela.add(jogo);
         janela.addKeyListener(jogo);
-        **/
+        
         
     }
     
     public static JFrame criarJanela() {
-        JFrame janela = new JFrame();
-        //janela.setSize(1366, 768);
-        janela.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        janela.setUndecorated(true);
-        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janela.setLayout(null);
-        janela.setResizable(false);
-        janela.setLocationRelativeTo(null);
-        janela.setVisible(true);
-        return janela;
+        JFrame criarJanela = new JFrame();
+//        criarJanela.setSize(1366, 768);
+
+        //criarJanela.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        criarJanela.setUndecorated(true);
+        criarJanela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //criarJanela.setLayout(null);
+        criarJanela.setResizable(false);
+        criarJanela.pack();
+        criarJanela.setLocationRelativeTo(null);
+        criarJanela.setVisible(true);
+        return criarJanela;
     }
     
 }
