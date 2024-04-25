@@ -15,21 +15,30 @@ public class Chao implements Desenhavel, Atualizavel{
     private final Desenho TERRA = new Desenho(LOCALIZACAO_IMAGEM_TERRA, "Terra");
     
     private boolean isCaminho;
-   
-    public Chao(int x , int y) {
-        int tamanho = 100;
+    private int x;
+    private int y;
+    private int tamanhoX;
+    private int tamanhoY;
+
+    public Chao(int x, int y, int tamanhoX, int tamanhoY) {
+        this.x = x;
+        this.y = y;
+        this.tamanhoX = tamanhoX;
+        this.tamanhoY = tamanhoY;
         
         GRAMA.setX(x);
         GRAMA.setY(y);
-        GRAMA.setTamanhoX(tamanho);
-        GRAMA.setTamanhoY(tamanho);
+        GRAMA.setTamanhoX(tamanhoX);
+        GRAMA.setTamanhoY(tamanhoY);
         
         TERRA.setX(x);
         TERRA.setY(y);
-        TERRA.setTamanhoX(tamanho);
-        TERRA.setTamanhoY(tamanho);
-        
+        TERRA.setTamanhoX(tamanhoX);
+        TERRA.setTamanhoY(tamanhoY);
     }
+    
+    
+    
 
     @Override
     public void paint(Graphics2D g) {
@@ -43,10 +52,7 @@ public class Chao implements Desenhavel, Atualizavel{
 
     @Override
     public void update() {
-        java.util.Random random = new java.util.Random();
-        if (random.nextInt(10) == 5) {
-            isCaminho = !isCaminho;
-        }
+        isCaminho = true;
     }
     
     

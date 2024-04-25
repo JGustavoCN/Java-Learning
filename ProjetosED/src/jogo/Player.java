@@ -1,43 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package jogo;
+
+import java.awt.Graphics2D;
 
 /**
  *
  * @author Aluno
  */
-public class Player {
-    
-        int linha;
-        int coluna;
+public class Player implements Desenhavel, Atualizavel {
 
-        public Player() {
-            this.linha = 0;
-            this.coluna = 0;
-        }
+    Posicao posicao;
 
-        // colocar ele para sbaer qual direcao vai? direita() esquerda() cimaEsquerda()
-        public void mover(int linha, int coluna) {
-            this.linha = linha;
-            this.coluna = coluna;
-        }
+    public Player() {
+        posicao = new Posicao(0, 0);
+    }
 
-        public void direita() {
-            this.coluna += 1;
-        }
+    // colocar ele para saber qual direcao vai? direita() esquerda() cimaEsquerda()
+    public void mover(int linha, int coluna) {
+        posicao.mover(linha, coluna);
+    }
 
-        public void baixo() {
-            this.linha += 1;
-        }
+    public void direita() {
+        posicao.coluna += 1;
+    }
 
-        public void cima() {
-            this.linha -= 1;
-        }
+    public void baixo() {
+        posicao.linha += 1;
+    }
 
-        public void esquerda() {
-            this.coluna -= 1;
-        }
+    public void cima() {
+        posicao.linha -= 1;
+    }
+
+    public void esquerda() {
+        posicao.coluna -= 1;
+    }
+
+    @Override
+    public void paint(Graphics2D g) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 
 }
