@@ -1,4 +1,4 @@
-package jogo;
+package jogo.abstracts;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,20 +10,15 @@ import javax.imageio.ImageIO;
  *
  * @author José Gustavo
  */
-public class Desenho implements Desenhavel, Atualizavel{
+public abstract class Desenho implements Desenhavel{
 
     private BufferedImage desenho;
     private String nome;
-    private int x;
-    private int y;
-    private int tamanhoX;
-    private int tamanhoY;
-    
+    public Formato formato;
 
     public Desenho(String localizacaoDaImagem, String nome) {
         
         try {
-            System.out.println(localizacaoDaImagem);
             this.desenho = ImageIO.read(new File(localizacaoDaImagem));
         } catch (IOException e) {
             System.out.println("Não carregou a imagem do/a " + nome);
@@ -36,8 +31,8 @@ public class Desenho implements Desenhavel, Atualizavel{
     
     public Desenho(BufferedImage desenho, int x, int y) {
         this.desenho = desenho;
-        this.x = x;
-        this.y = y;
+        formato.x = x;
+        formato.y = y;
     }
     
     public Desenho(BufferedImage desenho) {
@@ -52,16 +47,11 @@ public class Desenho implements Desenhavel, Atualizavel{
     public void paint(Graphics2D g) {
         g.drawImage(
                 this.getDesenho(),
-                this.getX(), this.getY(), 
-                    this.getX() + this.getTamanhoX(), this.getY() + this.getTamanhoY(),
+                formato.x, formato.y, 
+                    formato.x + formato.tamanhoX, formato.y + formato.tamanhoY,
                 0, 0,
                 this.getDesenho().getWidth(), this.getDesenho().getHeight(),
                 null);
-    }
-
-    @Override
-    public void update() {
-
     }
 
     public BufferedImage getDesenho() {
@@ -80,37 +70,12 @@ public class Desenho implements Desenhavel, Atualizavel{
         this.nome = nome;
     }
 
-    public int getX() {
-        return x;
+    public Formato getFormato() {
+        return formato;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setFormato(Formato formato) {
+        this.formato = formato;
     }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getTamanhoX() {
-        return tamanhoX;
-    }
-
-    public void setTamanhoX(int tamanhoX) {
-        this.tamanhoX = tamanhoX;
-    }
-
-    public int getTamanhoY() {
-        return tamanhoY;
-    }
-
-    public void setTamanhoY(int tamanhoY) {
-        this.tamanhoY = tamanhoY;
-    }
-
    
 }

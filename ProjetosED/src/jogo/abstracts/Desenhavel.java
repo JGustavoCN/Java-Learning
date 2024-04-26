@@ -1,4 +1,4 @@
-package jogo;
+package jogo.abstracts;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

@@ -24,7 +24,8 @@ public class Nave extends Desenho{
         // Desenhando a imagem e modificando o tamanho
         g.drawImage(
                 this.getDesenho(), 
-                this.getX(), App.tela.getHeight() - 150, this.getX()+100, App.tela.getHeight() - 150+100,
+                this.getX(), App.tela.getHeight() - 150,
+                this.getX()+100, App.tela.getHeight() - 150+100,
                 0,0,
                 this.getDesenho().getWidth(), this.getDesenho().getHeight(), 
                 null);

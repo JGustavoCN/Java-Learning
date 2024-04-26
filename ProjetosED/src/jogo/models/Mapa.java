@@ -1,21 +1,25 @@
-package jogo;
+package jogo.models;
 
+import jogo.main.PlayManager;
 import java.awt.Graphics2D;
+import jogo.abstracts.Atualizavel;
+import jogo.abstracts.Desenhavel;
+import jogo.abstracts.Formato;
 
 /**
  *
  * @author José Gustavo
  */
-public class Area implements Atualizavel, Desenhavel {
+public class Mapa implements Atualizavel, Desenhavel {
 
-    private Chao[][] chao;
-    private int tamanhoX;
-    private int tamanhoY;
-    public static int tamanhoTotal;
+    public final Chao[][] chao;
+    private final int tamanhoX;
+    private final int tamanhoY;
+    private final int tamanhoTotal;
     private int linha;
     private int coluna;
 
-    public Area(int tamanhoX, int tamanhoY, int tamanhoChao) {
+    public Mapa(int tamanhoX, int tamanhoY, int tamanhoChao) {
 
         this.tamanhoX = tamanhoX;
         this.tamanhoY = tamanhoY;
@@ -25,10 +29,13 @@ public class Area implements Atualizavel, Desenhavel {
         for (int i = 0; i < tamanhoTotal; i++) {
             linha = i / tamanhoX;
             coluna = i % tamanhoX;
-            chao[linha][coluna] = new Chao(
-                    coluna * tamanhoChao, linha * tamanhoChao,
-                    tamanhoChao, tamanhoChao
-            );
+            chao[linha][coluna] = 
+                new Chao( 
+                    new Formato (
+                        coluna * tamanhoChao, linha * tamanhoChao,
+                        tamanhoChao, tamanhoChao
+                    )
+                );
         }
     }
 
@@ -53,5 +60,18 @@ public class Area implements Atualizavel, Desenhavel {
 
         }
     }
+
+    public int getTamanhoX() {
+        return tamanhoX;
+    }
+
+    public int getTamanhoY() {
+        return tamanhoY;
+    }
+
+    public int getTamanhoTotal() {
+        return tamanhoTotal;
+    }
+
 
 }

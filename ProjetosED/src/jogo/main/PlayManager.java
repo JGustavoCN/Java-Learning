@@ -1,6 +1,12 @@
-package jogo;
+package jogo.main;
 
 import java.awt.Graphics2D;
+import jogo.abstracts.Atualizavel;
+import jogo.abstracts.Desenhavel;
+import jogo.abstracts.Local;
+import jogo.models.Mapa;
+import jogo.models.Player;
+import jogo.abstracts.Posicao;
 
 /**
  *
@@ -8,60 +14,66 @@ import java.awt.Graphics2D;
  */
 public class PlayManager implements Desenhavel, Atualizavel {
 
-    public static Area area;
+    public static Mapa mapa;
     public static Player player;
     public static Local local;
+    public static boolean chegou;
 
     public PlayManager() {
         player = new Player();
-        area = new Area(5, 5, 100);
+        mapa = new Mapa(5, 5, 100);
     }
 
     @Override
     public void paint(Graphics2D g2) {
 
-        area.paint(g2);
+        mapa.paint(g2);
+        player.paint(g2);
 
     }
 
     @Override
     public void update() {
-        area.update();
+        local = posicao(mapa, player);
+        mapa.update();
+        player.update();
+        
     }
 
-    public static boolean cheguei(int[][] matriz, Player jogador) {
-        return jogador.posicao.linha == matriz.length - 1 && jogador.posicao.coluna == matriz[0].length - 1;
+    public static boolean isChegou(Mapa mapa, Player jogador) {
+        chegou = jogador.posicao.linha == mapa.getTamanhoY() - 1 && jogador.posicao.coluna == mapa.getTamanhoY() - 1;
+        return chegou;
     }
 
-    public static Local posicao(int[][] matriz, Player jogador) {
-
+    public static Local posicao(Mapa mapa, Player jogador) {
+        if (isChegou(mapa, jogador)) return Local.CANTO_INFERIOR_DIREITO;
         int linha = jogador.posicao.linha;
         int coluna = jogador.posicao.coluna;
+        System.out.println(linha +" - "+coluna);
+        int tamanhoX = mapa.getTamanhoX();
+        int tamanhoY = mapa.getTamanhoY();
+        
         if (linha == 0 && coluna == 0) {
             return Local.CANTO_SUPERIOR_ESQUERDO;
-        } else if (linha == 0 && coluna > 0 && coluna < matriz[0].length - 1) {
+        } else if (linha == 0 && coluna > 0 && coluna < tamanhoX - 1) {
             return Local.MEIO_SUPERIOR;
-        } else if (linha == 0 && coluna == matriz[0].length - 1) {
+        } else if (linha == 0 && coluna == tamanhoX - 1) {
             return Local.CANTO_SUPERIOR_DIREITO;
-        } else if (linha > 0 && linha < matriz.length - 1 && coluna == 0) {
+        } else if (linha > 0 && linha < tamanhoY - 1 && coluna == 0) {
             return Local.MEIO_ESQUERDO;
-        } else if (linha > 0 && linha < matriz.length - 1 && coluna > 0 && coluna < matriz[0].length - 1) {
+        } else if (linha > 0 && linha < tamanhoY - 1 && coluna > 0 && coluna < tamanhoX - 1) {
             return Local.MEIO;
-        } else if (linha > 0 && linha < matriz.length - 1 && coluna == matriz[0].length - 1) {
+        } else if (linha > 0 && linha < tamanhoY - 1 && coluna == tamanhoX - 1) {
             return Local.MEIO_DIREITO;
-        } else if (linha == matriz.length - 1 && coluna == 0) {
+        } else if (linha == tamanhoY - 1 && coluna == 0) {
             return Local.CANTO_INFERIOR_ESQUERDO;
-        } else if (linha == matriz.length - 1 && coluna > 0 && coluna < matriz[0].length - 1) {
+        } else if (linha == tamanhoY - 1 && coluna > 0 && coluna < tamanhoX - 1) {
             return Local.MEIO_INFERIOR;
-        } else if (linha == matriz.length - 1 && coluna == matriz[0].length - 1) {
-            return Local.CANTO_INFERIOR_DIREITO;
         } else {
             System.out.println("Posiçao não encontrada");
             return null;
         }
     }
-    
-    
 
     public static boolean verificarCaminho(int[][] matriz, Posicao posicaoAtual, Posicao posicaoAnterior) {
 

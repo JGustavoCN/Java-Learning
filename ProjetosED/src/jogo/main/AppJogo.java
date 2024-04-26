@@ -1,4 +1,4 @@
-package jogo;
+package jogo.main;
 
 import javax.swing.JFrame;
 

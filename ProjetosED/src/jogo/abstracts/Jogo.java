@@ -1,4 +1,4 @@
-package jogo;
+package jogo.abstracts;
 
 
 import javax.swing.JPanel;

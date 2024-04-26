@@ -1,17 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package jogo;
+package jogo.abstracts;
 
 /**
  *
- * @author Aluno
+ * @author José Gustavo
  */
 public class Posicao {
     
-        int linha;
-        int coluna;
+        public int linha;
+        public int coluna;
 
         public Posicao(int linha, int coluna) {
             this.linha = linha;
