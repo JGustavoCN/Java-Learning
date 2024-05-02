@@ -44,8 +44,9 @@ public class Mapa implements Atualizavel, Desenhavel {
         for (int i = 0; i < tamanhoTotal; i++) {
             linha = i / tamanhoX;
             coluna = i % tamanhoX;
-            if (PlayManager.player.posicao.coluna == coluna && PlayManager.player.posicao.linha == linha) {
+            if (PlayManager.jogador.posicao.coluna == coluna && PlayManager.jogador.posicao.linha == linha) {
                 chao[linha][coluna].update();
+                PlayManager.isChegou();
             }
 
         }
@@ -59,6 +60,7 @@ public class Mapa implements Atualizavel, Desenhavel {
             chao[linha][coluna].paint(g);
 
         }
+        
     }
 
     public int getTamanhoX() {

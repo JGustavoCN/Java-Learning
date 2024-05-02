@@ -17,6 +17,11 @@ public class Formato {
         this.tamanhoX = tamanhoX;
         this.tamanhoY = tamanhoY;
     }
+
+    @Override
+    public String toString() {
+        return "Formato{" + "x=" + x + ", y=" + y + ", tamanhoX=" + tamanhoX + ", tamanhoY=" + tamanhoY + '}';
+    }
     
     
 }

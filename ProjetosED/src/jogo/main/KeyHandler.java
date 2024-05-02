@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
  */
 public class KeyHandler implements KeyListener {
 
-    public static boolean cima, baixo, esquerda, direita, cantoSupE, cantoSupD, cantoInfE, cantoInfD;
+    public static boolean verificar, cima, baixo, esquerda, direita, cantoSupE, cantoSupD, cantoInfE, cantoInfD;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -18,10 +18,13 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // TAVLEZ - local = 
 
         int code = e.getKeyCode();
-
-        switch (PlayManager.local) {
+        if (code == KeyEvent.VK_V) {
+            verificar = true;
+        }
+        switch (PlayManager.posicaoJogador()) {
             case CANTO_SUPERIOR_ESQUERDO:
                 switch (code) {
                     case KeyEvent.VK_S:

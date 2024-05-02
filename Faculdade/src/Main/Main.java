@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import br.edu.ifs.poo.projeto.main.App;
+import java.util.Stack;
 
 /**
  *
@@ -62,16 +63,193 @@ public class Main {
 
     }
 
+    public static boolean verificarCaminho(int[][] matriz) {
+        int formatoCaminho = 1;
+        int linhas = matriz.length;
+        int colunas = matriz[0].length;
+        boolean[][] visitado = new boolean[linhas][colunas];
+
+        Stack<Posicao> pilha = new Stack<>();
+        pilha.push(new Posicao(0, 0));
+
+        while (!pilha.isEmpty()) {
+            Posicao posicaoAtual = pilha.pop();
+
+            if (posicaoAtual.linha == linhas - 1 && posicaoAtual.coluna == colunas - 1)
+                return true;
+
+            if (!visitado[posicaoAtual.linha][posicaoAtual.coluna]) {
+                visitado[posicaoAtual.linha][posicaoAtual.coluna] = true;
+
+                if (posicaoAtual.coluna < colunas - 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna + 1] == formatoCaminho)
+                    pilha.push(new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1));
+                if (posicaoAtual.linha < linhas - 1 && matriz[posicaoAtual.linha + 1][posicaoAtual.coluna] == formatoCaminho)
+                    pilha.push(new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna));
+                if (posicaoAtual.coluna > 0 && matriz[posicaoAtual.linha][posicaoAtual.coluna - 1] == formatoCaminho)
+                    pilha.push(new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1));
+                if (posicaoAtual.linha > 0 && matriz[posicaoAtual.linha - 1][posicaoAtual.coluna] == formatoCaminho)
+                    pilha.push(new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna));
+            }
+        }
+
+        return false;
+    }
+    
+    public static boolean verificarCaminho(int[][] matriz, Posicao posicaoAtual, boolean[][] visitado) {
+        int formatoCaminho = 1;
+        int linhas = matriz.length;
+        int colunas = matriz[0].length;
+
+        // Condição de parada: chegou ao final da matriz
+        if (posicaoAtual.linha == linhas - 1 && posicaoAtual.coluna == colunas - 1)
+            return true;
+
+        // Verifica se a posição atual é válida e não foi visitada ainda
+        if (posicaoAtual.linha >= 0 && posicaoAtual.linha < linhas &&
+            posicaoAtual.coluna >= 0 && posicaoAtual.coluna < colunas &&
+            matriz[posicaoAtual.linha][posicaoAtual.coluna] == formatoCaminho &&
+            !visitado[posicaoAtual.linha][posicaoAtual.coluna]) {
+
+            // Marca a posição atual como visitada
+            visitado[posicaoAtual.linha][posicaoAtual.coluna] = true;
+
+            // Verifica recursivamente as posições vizinhas
+            if (verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1), visitado) ||
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna), visitado) ||
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1), visitado) ||
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna), visitado)) {
+                return true;
+            }
+
+            // Se não encontrou um caminho válido a partir desta posição, desmarca como visitada
+            visitado[posicaoAtual.linha][posicaoAtual.coluna] = false;
+        }
+
+        return false;
+    }
+    
+    public static void verificarCaminho(int[][] matriz, Posicao posicaoAtual, boolean[][] visitado, Stack<Posicao> caminho) {
+        int formatoCaminho = 1;
+        int linhas = matriz.length;
+        int colunas = matriz[0].length;
+
+        // Verifica se a posição atual é válida e não foi visitada ainda
+        if (posicaoAtual.linha >= 0 && posicaoAtual.linha < linhas &&
+            posicaoAtual.coluna >= 0 && posicaoAtual.coluna < colunas &&
+            matriz[posicaoAtual.linha][posicaoAtual.coluna] == formatoCaminho &&
+            !visitado[posicaoAtual.linha][posicaoAtual.coluna]) {
+
+            // Adiciona a posição atual ao caminho
+            caminho.push(posicaoAtual);
+            n++;
+
+            // Condição de parada: chegou ao final da matriz
+            if (posicaoAtual.linha == linhas - 1 && posicaoAtual.coluna == colunas - 1) {
+                
+                mostrarCaminhos(caminho);
+            } else {
+                // Marca a posição atual como visitada
+                visitado[posicaoAtual.linha][posicaoAtual.coluna] = true;
+                
+                // Verifica recursivamente as posições vizinhas
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1), visitado, caminho);
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna), visitado, caminho);
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1), visitado, caminho);
+                verificarCaminho(matriz, new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna), visitado, caminho);
+
+                // Desmarca a posição atual como visitada
+                visitado[posicaoAtual.linha][posicaoAtual.coluna] = false;
+                
+            }
+
+            // Remove a posição atual do caminho
+            caminho.pop();
+            n--;
+        }
+    }
+    
+    public static void mostrar(boolean visitado[][]){
+        for (boolean[] visitado1 : visitado) {
+                    for (boolean visitado2 : visitado1) {
+                        System.out.print(visitado2+" ");
+                    }
+                    System.out.println("");
+                }
+                System.out.println("");
+                System.out.println("");
+    }
+    static int n;
+    public static boolean verificarCaminho2(int[][] matriz, Posicao posicaoAtual, boolean[][] visitado, Stack<Posicao> caminho) {
+        int formatoCaminho = 1;
+        int linhas = matriz.length;
+        int colunas = matriz[0].length;
+
+        // Condição de parada: chegou ao final da matriz
+        if (posicaoAtual.linha == linhas - 1 && posicaoAtual.coluna == colunas - 1) {
+            caminho.push(posicaoAtual);
+            
+            mostrarCaminhos(caminho);
+            caminho.pop(); // Removemos a posição atual do caminho antes de retornar true
+            return true;
+        }
+
+        // Verifica se a posição atual é válida e não foi visitada ainda
+        if (posicaoAtual.linha >= 0 && posicaoAtual.linha < linhas &&
+            posicaoAtual.coluna >= 0 && posicaoAtual.coluna < colunas &&
+            matriz[posicaoAtual.linha][posicaoAtual.coluna] == formatoCaminho &&
+            !visitado[posicaoAtual.linha][posicaoAtual.coluna]) {
+
+            // Marca a posição atual como visitada
+            visitado[posicaoAtual.linha][posicaoAtual.coluna] = true;
+            
+            // Adiciona a posição atual ao caminho
+            caminho.push(posicaoAtual);
+
+            // Verifica recursivamente as posições vizinhas
+            if (verificarCaminho2(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1), visitado, caminho) ||
+                verificarCaminho2(matriz, new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna), visitado, caminho) ||
+                verificarCaminho2(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1), visitado, caminho) ||
+                verificarCaminho2(matriz, new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna), visitado, caminho)) {
+                return true;
+            }
+
+            // Se não encontrou um caminho válido a partir desta posição, remove a posição do caminho
+            caminho.pop();
+        }
+
+        return false;
+    }
+
+    public static void mostrarCaminhos(Stack<Posicao> caminho) {
+        System.out.println("Caminho encontrado:");
+        System.out.println(caminho.size());
+        System.out.println(n);
+        //n++;
+        // Percorre a pilha de caminho e exibe o caminho encontrado
+        for (Posicao posicao : caminho) {
+            System.out.print("(" + posicao.linha + ", " + posicao.coluna + ") ");
+        }
+        System.out.println("");
+    }
+    
     public static void main(String[] args) {
-        andandoNaVia();
+        //andandoNaVia();
         
         int[][] matriz2
                 = {
                     {1, 0, 1, 1, 1},
-                    {1, 0, 1, 0, 1},
-                    {1, 0, 1, 0, 1},
-                    {1, 0, 1, 0, 1},
                     {1, 1, 1, 0, 1},
+                    {0, 0, 1, 1, 1},
+                    {0, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1}
+                };
+        int[][] matriz3
+                = {
+                    {1, 1, 1, 1, 1},
+                    {1, 1, 0, 0, 1},
+                    {0, 0, 0, 0, 1},
+                    {0, 0, 0, 0, 1},
+                    {0, 0, 0, 0, 1}
                 };
         
         int[][] matriz1
@@ -81,9 +259,13 @@ public class Main {
                     {0, 0, 1, 0},
                     {0, 0, 0, 1},
                 };
-
-        boolean tem = verificarCaminho(matriz2, new Posicao(0, 0), new Posicao(0, 0));
-        
+        boolean tem = false;
+        //tem = verificarCaminho(matriz3);
+        //tem = verificarCaminho(matriz3, new Posicao(0,0), new Posicao(0,0));
+        //tem = verificarCaminho(matriz2, new Posicao(0,0), new boolean[5][5]);
+        //tem = verificarCaminho2(matriz3, new Posicao(0,0), new boolean[5][5], new Stack<Posicao>());
+        verificarCaminho(matriz3, new Posicao(0,0), new boolean[5][5], new Stack<Posicao>());
+        System.out.println(n);
         if (tem) {
             System.out.println("OK");
         } else {

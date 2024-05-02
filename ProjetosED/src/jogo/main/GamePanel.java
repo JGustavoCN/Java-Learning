@@ -61,6 +61,7 @@ public class GamePanel extends Jogo {
             delta += (currentTime - lastTime) / drawInterval;
             // PQ??????
             lastTime = currentTime;
+            
             if (delta >= 1) {
                 long tempoInicial = System.currentTimeMillis();
                 update(); // atualizar o jogo
@@ -78,7 +79,10 @@ public class GamePanel extends Jogo {
 
     @Override
     public void update() {
-        pm.update();
+        if (!PlayManager.chegou) {
+           pm.update(); 
+        }
+        
     }
     
     @Override

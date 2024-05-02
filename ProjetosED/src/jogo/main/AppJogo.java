@@ -7,7 +7,6 @@ import javax.swing.JFrame;
  * @author José Gustavo
  */
 public class AppJogo {
-
     public static JFrame janela;
  
     public static void main(String[] args) {

@@ -34,7 +34,7 @@ public class Chao implements Desenhavel, Atualizavel {
     private final Desenho GRAMA = new Grama();
     private final Desenho TERRA = new Terra();
 
-    private boolean isCaminho;
+    private boolean caminho;
     public final Formato formato;
 
     public Chao(Formato formato) {
@@ -46,7 +46,7 @@ public class Chao implements Desenhavel, Atualizavel {
 
     @Override
     public void paint(Graphics2D g) {
-        if (isCaminho) {
+        if (caminho) {
             TERRA.paint(g);
         } else {
             GRAMA.paint(g);
@@ -56,7 +56,18 @@ public class Chao implements Desenhavel, Atualizavel {
 
     @Override
     public void update() {
-        isCaminho = true;
+        caminho = true;
     }
 
+    public boolean isCaminho() {
+        return caminho;
+    }
+
+    @Override
+    public String toString() {
+        return "Chao{" + "caminho=" + caminho + ", formato=" + formato + '}';
+    }
+
+    
+    
 }

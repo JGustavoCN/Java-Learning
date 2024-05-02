@@ -1,12 +1,10 @@
 package jogo.main;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
-import jogo.abstracts.Atualizavel;
-import jogo.abstracts.Desenhavel;
-import jogo.abstracts.Local;
-import jogo.models.Mapa;
-import jogo.models.Player;
-import jogo.abstracts.Posicao;
+import jogo.abstracts.*;
+import jogo.models.*;
 
 /**
  *
@@ -15,44 +13,56 @@ import jogo.abstracts.Posicao;
 public class PlayManager implements Desenhavel, Atualizavel {
 
     public static Mapa mapa;
-    public static Player player;
-    public static Local local;
+    public static GPS GPS;
+    public static Jogador jogador;
+    public static final Posicao posicaoInicial = new Posicao(0, 0);
     public static boolean chegou;
 
     public PlayManager() {
-        player = new Player();
+        jogador = new Jogador(new Posicao(posicaoInicial.linha, posicaoInicial.coluna));
         mapa = new Mapa(5, 5, 100);
+        GPS = new GPS(mapa);
     }
 
     @Override
     public void paint(Graphics2D g2) {
 
         mapa.paint(g2);
-        player.paint(g2);
+        jogador.paint(g2);
+
+        if (chegou) {
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Arial", Font.BOLD, 20));
+            g2.drawString("Para verificar click 'v'", 80, 250);
+            GPS.paint(g2);
+            if (KeyHandler.verificar && !GPS.temCaminho()) {
+                GPS.verificarCaminhos(new Posicao(posicaoInicial.linha, posicaoInicial.coluna));
+                KeyHandler.verificar = false;
+            }
+        }
 
     }
 
     @Override
     public void update() {
-        local = posicao(mapa, player);
         mapa.update();
-        player.update();
-        
+        jogador.update();
     }
 
-    public static boolean isChegou(Mapa mapa, Player jogador) {
+    public static boolean isChegou() {
         chegou = jogador.posicao.linha == mapa.getTamanhoY() - 1 && jogador.posicao.coluna == mapa.getTamanhoY() - 1;
         return chegou;
     }
 
-    public static Local posicao(Mapa mapa, Player jogador) {
-        if (isChegou(mapa, jogador)) return Local.CANTO_INFERIOR_DIREITO;
+    public static Local posicaoJogador() {
+        if (isChegou()) {
+            return Local.CANTO_INFERIOR_DIREITO;
+        }
         int linha = jogador.posicao.linha;
         int coluna = jogador.posicao.coluna;
-        System.out.println(linha +" - "+coluna);
         int tamanhoX = mapa.getTamanhoX();
         int tamanhoY = mapa.getTamanhoY();
-        
+
         if (linha == 0 && coluna == 0) {
             return Local.CANTO_SUPERIOR_ESQUERDO;
         } else if (linha == 0 && coluna > 0 && coluna < tamanhoX - 1) {
@@ -73,38 +83,6 @@ public class PlayManager implements Desenhavel, Atualizavel {
             System.out.println("Posiçao não encontrada");
             return null;
         }
-    }
-
-    public static boolean verificarCaminho(int[][] matriz, Posicao posicaoAtual, Posicao posicaoAnterior) {
-
-        if (matriz.length - 1 == posicaoAtual.linha && matriz[0].length - 1 == posicaoAtual.coluna) {
-            return true;
-        }
-
-        int formatoCaminho = 1;
-        boolean caminhoDireita = false;
-        boolean caminhoBaixo = false;
-        boolean caminhoEsquerda = false;
-        boolean caminhoCima = false;
-
-        if (posicaoAtual.coluna < matriz[0].length - 1 && posicaoAnterior.coluna != posicaoAtual.coluna + 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna + 1] == formatoCaminho) {
-            caminhoDireita = verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna + 1), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
-        }
-
-        if (posicaoAtual.linha < matriz.length - 1 && posicaoAnterior.linha != posicaoAtual.linha + 1 && matriz[posicaoAtual.linha + 1][posicaoAtual.coluna] == formatoCaminho) {
-            caminhoBaixo = verificarCaminho(matriz, new Posicao(posicaoAtual.linha + 1, posicaoAtual.coluna), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
-        }
-
-        if (posicaoAtual.coluna > 0 && posicaoAnterior.coluna != posicaoAtual.coluna - 1 && matriz[posicaoAtual.linha][posicaoAtual.coluna - 1] == formatoCaminho) {
-            caminhoEsquerda = verificarCaminho(matriz, new Posicao(posicaoAtual.linha, posicaoAtual.coluna - 1), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
-        }
-
-        if (posicaoAtual.linha > 0 && posicaoAnterior.linha != posicaoAtual.linha - 1 && matriz[posicaoAtual.linha - 1][posicaoAtual.coluna] == formatoCaminho) {
-            caminhoCima = verificarCaminho(matriz, new Posicao(posicaoAtual.linha - 1, posicaoAtual.coluna), new Posicao(posicaoAtual.linha, posicaoAtual.coluna));
-        }
-
-        return caminhoEsquerda || caminhoBaixo || caminhoDireita || caminhoCima;
-
     }
 
 }
