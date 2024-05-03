@@ -29,24 +29,39 @@ public class PlayManager implements Desenhavel, Atualizavel {
 
         mapa.paint(g2);
         jogador.paint(g2);
-
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 20));
+        if (!KeyHandler.comecar) {
+            g2.drawString("Enter para começar", 260, 340);
+        }
         if (chegou) {
-            g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Arial", Font.BOLD, 20));
-            g2.drawString("Para verificar click 'v'", 80, 250);
-            GPS.paint(g2);
-            if (KeyHandler.verificar && !GPS.temCaminho()) {
-                GPS.verificarCaminhos(new Posicao(posicaoInicial.linha, posicaoInicial.coluna));
-                KeyHandler.verificar = false;
+            g2.drawString("Terminou", 310, 340);
+            if (KeyHandler.verificar) {
+                GPS.paint(g2);
+                g2.setColor(Color.ORANGE);
+                if (KeyHandler.mostrarTodosCaminhos) {
+                    g2.drawString("Todos", 310, 370);
+                }
+                if (KeyHandler.mostrarMenoresCaminhos) {
+                    g2.drawString("Menor", 310, 400);
+                }
+                if (KeyHandler.mostrarMaioresCaminhos) {
+                    g2.drawString("Maior", 310, 430);
+                }
+                if (!GPS.temCaminho()) {
+                    GPS.verificarCaminhos(new Posicao(posicaoInicial.linha, posicaoInicial.coluna));
+                }
             }
         }
-
     }
 
     @Override
     public void update() {
-        mapa.update();
-        jogador.update();
+        if (KeyHandler.comecar) {
+            mapa.update();
+            jogador.update();
+        }
+
     }
 
     public static boolean isChegou() {

@@ -12,8 +12,8 @@ import jogo.abstracts.Jogo;
  */
 public class GamePanel extends Jogo {
 
-    public static final int LARGURA = 500;
-    public static final int ALTURA = 500;
+    public static final int LARGURA = 700;
+    public static final int ALTURA = 700;
     private final int FPS = 60;
     private Thread gameThread;
     PlayManager pm;
@@ -22,7 +22,7 @@ public class GamePanel extends Jogo {
         
         //Configuração
         this.setPreferredSize(new Dimension(LARGURA, ALTURA));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.GRAY);
         this.setLayout(null);
 
         // KeyListener

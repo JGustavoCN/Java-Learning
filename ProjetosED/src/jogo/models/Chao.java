@@ -12,7 +12,7 @@ import jogo.abstracts.Formato;
  */
 public class Chao implements Desenhavel, Atualizavel {
 
-    public class Grama extends Desenho {
+    public static class Grama extends Desenho {
 
         private static final String LOCALIZACAO_IMAGEM = "src/jogo/imagens/grama.jpg";
 
@@ -21,7 +21,7 @@ public class Chao implements Desenhavel, Atualizavel {
         }
     }
 
-    public class Terra extends Desenho {
+    public static class Terra extends Desenho {
 
         private static final String LOCALIZACAO_IMAGEM = "src/jogo/imagens/terra.jpg";
 

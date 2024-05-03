@@ -2,12 +2,11 @@ package jogo.models;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import jogo.abstracts.Desenhavel;
 import jogo.abstracts.Posicao;
+import jogo.main.KeyHandler;
 
 /**
  *
@@ -42,7 +41,18 @@ public class GPS implements Desenhavel {
     public void paint(Graphics2D g) {
         g.setColor(Color.green);
         for (Caminho caminho : caminhos) {
-            caminho.paint(g);
+            if (KeyHandler.mostrarTodosCaminhos) {
+                caminho.paint(g);
+            }else{
+                if (KeyHandler.mostrarMaioresCaminhos && caminho.posicoes.size() == maiorTamanhoDeCaminho()) {
+                    caminho.paint(g);
+                }
+                if (KeyHandler.mostrarMenoresCaminhos && caminho.posicoes.size() == menorTamanhoDeCaminho()) {
+                    caminho.paint(g);
+                }
+                
+            }
+            
         }
     }
     
@@ -85,6 +95,26 @@ public class GPS implements Desenhavel {
 
     }
 
+    public int maiorTamanhoDeCaminho(){
+        if (caminhos.isEmpty()) return 0;
+        int maior= 0;
+        for (int i = 0; i < caminhos.size(); i++) {
+            if (caminhos.get(i).posicoes.size() > maior) {
+                maior = caminhos.get(i).posicoes.size();
+            }
+        }
+        return maior;
+    }
+    public int menorTamanhoDeCaminho(){
+        if (caminhos.isEmpty()) return 0;
+        int menor = 25;
+        for (int i = 0; i < caminhos.size(); i++) {
+            if (caminhos.get(i).posicoes.size() < menor) {
+                menor = caminhos.get(i).posicoes.size();
+            }
+        }
+        return menor;
+    }
     public void setCaminho(Stack posicoes) {
         Caminho caminho = new Caminho();
         while (!posicoes.isEmpty()) {
