@@ -1,6 +1,6 @@
-package br.edu.ifs.ed;
+package br.edu.ifs.ed.atividades;
 
-import static br.edu.ifs.ed.Entrada.*;
+import static br.edu.ifs.ed.atividades.Entrada.*;
 
 /**
  *

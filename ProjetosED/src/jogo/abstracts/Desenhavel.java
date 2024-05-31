@@ -17,7 +17,7 @@ public interface Desenhavel {
      * 
      * @param g2 Use o Grafics geral do jogo e crie uma nova variavel para receber
      * um Graphics2D para ativar o AntiAliasing
-     * @return 
+     * @return Graphics2D
      */
     default Graphics2D ativarAntiAliasing(Graphics g2){
         Graphics2D g = (Graphics2D) g2.create();

@@ -1,5 +1,9 @@
-package br.edu.ifs.ed;
+package br.edu.ifs.ed.atividades;
 
+import br.edu.ifs.ed.atividades.Entrada;
+import br.edu.ifs.ed.atividades.Aluno;
+import br.edu.ifs.ed.atividades.Automovel;
+import br.edu.ifs.ed.estruturas.estaticas.PilhaFixa;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +16,7 @@ import java.util.Vector;
 public class AppED {
 
     public static void main(String[] args) {
+         
         int[] vetor = new int[100000];
         Random random = new Random();
         for (int i = 0; i < vetor.length; i++) {

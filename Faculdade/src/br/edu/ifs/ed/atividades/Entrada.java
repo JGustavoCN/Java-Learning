@@ -1,4 +1,4 @@
-package br.edu.ifs.ed;
+package br.edu.ifs.ed.atividades;
 
 import java.util.Random;
 import java.util.Scanner;

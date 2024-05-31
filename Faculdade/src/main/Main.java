@@ -1,6 +1,6 @@
 package main;
 
-import br.edu.ifs.ed.Entrada;
+import br.edu.ifs.ed.atividades.Entrada;
 import br.edu.ifs.poo.listas.PooLista2;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import br.edu.ifs.poo.projeto.main.App;
 import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -233,6 +234,9 @@ public class Main {
     }
     
     public static void main(String[] args) {
+        System.out.print("Esta é uma mensagem normal.\n");
+        System.err.print("Esta é uma mensagem de erro.\n");
+        
         //andandoNaVia();
         
         int[][] matriz2
@@ -596,8 +600,8 @@ public class Main {
     }
 
     public static void entrada() {
-
-        Scanner teclado = new Scanner(System.in, "latin1");
+        
+        Scanner teclado = new Scanner(System.in, "latin1").useLocale(Locale.ITALY);
         System.out.println(teclado.delimiter());
         System.out.println(teclado.locale());
 

@@ -3,10 +3,10 @@ package jogo.models;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Stack;
 import jogo.abstracts.Desenhavel;
 import jogo.abstracts.Posicao;
 import jogo.main.KeyHandler;
+import jogo.structs.Pilha;
 
 /**
  *
@@ -27,13 +27,13 @@ public class GPS implements Desenhavel {
     
     public Mapa mapa;
     public ArrayList<Caminho> caminhos;
-    private boolean[][] visitados;
-    private Stack<Posicao> posicoes;
+    private final boolean[][] visitados;
+    private final Pilha posicoes;
 
     public GPS(Mapa mapa) {
         this.mapa = mapa;
         this.visitados = new boolean[mapa.getTamanhoY()][mapa.getTamanhoX()];
-        this.posicoes = new Stack();
+        this.posicoes = new Pilha();
         this.caminhos = new ArrayList<>();
     }
     
@@ -50,7 +50,6 @@ public class GPS implements Desenhavel {
                 if (KeyHandler.mostrarMenoresCaminhos && caminho.posicoes.size() == menorTamanhoDeCaminho()) {
                     caminho.paint(g);
                 }
-                
             }
             
         }
@@ -69,11 +68,11 @@ public class GPS implements Desenhavel {
                 && !visitados[posicaoAtual.linha][posicaoAtual.coluna]) {
 
             // Adiciona a posição atual ao posicoes
-            posicoes.push(posicaoAtual);
+            posicoes.empilhar(posicaoAtual);
 
             // Condição de parada: chegou ao final da chao
             if (posicaoAtual.linha == linhas - 1 && posicaoAtual.coluna == colunas - 1) {
-                setCaminho((Stack) posicoes.clone());
+                setCaminho(posicoes.clone());
             } else {
                 // Marca a posição atual como visitada
                 visitados[posicaoAtual.linha][posicaoAtual.coluna] = true;
@@ -90,7 +89,7 @@ public class GPS implements Desenhavel {
             }
           
             // Remove a posição atual do posicoes
-            posicoes.pop();
+            posicoes.desempilhar();
         }
 
     }
@@ -115,10 +114,10 @@ public class GPS implements Desenhavel {
         }
         return menor;
     }
-    public void setCaminho(Stack posicoes) {
+    public void setCaminho(Pilha posicoes) {
         Caminho caminho = new Caminho();
-        while (!posicoes.isEmpty()) {
-            caminho.posicoes.add((Posicao) posicoes.pop());
+        while (!posicoes.estaVazia()) {
+            caminho.posicoes.add((Posicao) posicoes.desempilhar());
         }
         caminhos.add(caminho);
     }
