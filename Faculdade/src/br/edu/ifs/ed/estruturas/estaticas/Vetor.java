@@ -9,6 +9,7 @@ package br.edu.ifs.ed.estruturas.estaticas;
 public class Vetor<E> extends Colecao<E>{
 
     public Vetor() {
+        super();
     }
 
     public Vetor(int capacidadeInicial, int incrementoDeCapacidade) {

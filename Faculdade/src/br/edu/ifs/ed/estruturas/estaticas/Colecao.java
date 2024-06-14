@@ -9,13 +9,15 @@ import java.util.Arrays;
  */
 public abstract class Colecao<E> {
     
+    protected static final int CAPACIDADE_PADRAO = 11;
+    
     //No collections usam um array de objects
     protected E[] elementos;
     protected int tamanho;
     protected int incrementoDeCapacidade;
     
     public Colecao(){
-        this(10);
+        this(CAPACIDADE_PADRAO);
     }
     
     public Colecao(int capacidadeInicial, int incrementoDeCapacidade){

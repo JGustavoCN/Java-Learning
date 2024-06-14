@@ -8,6 +8,7 @@ package br.edu.ifs.ed.estruturas.estaticas;
 public class Pilha<E> extends Colecao<E>{
 
     public Pilha() {
+        super();
     }
 
     public Pilha(int capacidadeInicial, int incrementoDeCapacidade) {
