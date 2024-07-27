@@ -135,12 +135,4 @@ public abstract class Colecao<E> {
 
     }
     
-    public static class VaziaException extends RuntimeException {
-
-        public VaziaException() {}
-
-        public VaziaException(String message) {super(message);}
-        
-    }
-    
 }

@@ -103,6 +103,7 @@ public class testeE {
         int k =1;
         int parent = (k - 1) >>> 1;
         //System.out.println(parent);
+        
        
     }
 }

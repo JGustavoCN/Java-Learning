@@ -1,5 +1,6 @@
 package br.edu.ifs.ed.estruturas.estaticas;
 
+import br.edu.ifs.ed.estruturas.VaziaException;
 import java.util.Comparator;
 
 /**

@@ -1,5 +1,7 @@
 package br.edu.ifs.ed.estruturas.estaticas;
 
+import br.edu.ifs.ed.estruturas.VaziaException;
+
 /**
  *
  * @author José Gustavo
@@ -32,7 +34,5 @@ public class Pilha<E> extends Colecao<E>{
         if (estaVazia()) throw new VaziaException("Pilha Vazia");
         return elementos[tamanho - 1];
     }
-    
-    
 
 }
