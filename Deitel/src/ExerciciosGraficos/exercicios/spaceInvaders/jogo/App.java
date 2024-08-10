@@ -32,12 +32,12 @@ public class App {
     
     public static JFrame criarJanela() {
         JFrame criarJanela = new JFrame();
-//        criarJanela.setSize(1366, 768);
+        criarJanela.setSize(1366, 768);
 
-        //criarJanela.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        criarJanela.setExtendedState(JFrame.MAXIMIZED_BOTH);
         criarJanela.setUndecorated(true);
         criarJanela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //criarJanela.setLayout(null);
+        criarJanela.setLayout(null);
         criarJanela.setResizable(false);
         criarJanela.pack();
         criarJanela.setLocationRelativeTo(null);

@@ -1,11 +1,12 @@
 package br.edu.ifs.ed.estruturas.estaticas;
 
+import br.edu.ifs.ed.estruturas.IndiceForaDoLimiteException;
+
 /**
  *
  * @author José Gustavo
  * @param <E> Tipo dos elementos
  */
-
 public class Vetor<E> extends Colecao<E>{
 
     public Vetor() {
@@ -105,16 +106,6 @@ public class Vetor<E> extends Colecao<E>{
                     return i;
         }
         return -1;
-    }
-    
-    //Não posso ter uma classe Exception dentro de uma classe que possua Generic, por isso o static
-    public static class IndiceForaDoLimiteException extends VirtualMachineError {
-
-        public IndiceForaDoLimiteException() {}
-
-        public IndiceForaDoLimiteException(String message) {super(message);}
-        
-        public IndiceForaDoLimiteException(int indice) {super("Indice fora do intervalo do vetor: " + indice);}
     }
     
 }

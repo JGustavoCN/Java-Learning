@@ -1,6 +1,4 @@
-package br.edu.ifs.ed.estruturas.dinamica.simples;
-
-import br.edu.ifs.ed.estruturas.VaziaException;
+package br.edu.ifs.farmacia.util;
 
 /**
  *

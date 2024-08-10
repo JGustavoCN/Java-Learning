@@ -1,12 +1,16 @@
-package br.edu.ifs.ed.estruturas.dinamica.simples;
+package br.edu.ifs.farmacia.util;
+
+import java.io.Serializable;
 
 /**
  *
  * @author José Gustavo
  * @param <E> Tipo do Nó
  */
-public class No<E> {
-
+public class No<E> implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
     private E elemento;
     private No<E> proximo;
 
