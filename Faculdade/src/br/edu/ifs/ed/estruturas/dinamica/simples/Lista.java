@@ -2,6 +2,7 @@ package br.edu.ifs.ed.estruturas.dinamica.simples;
 
 import br.edu.ifs.ed.estruturas.IndiceForaDoLimiteException;
 import br.edu.ifs.ed.estruturas.VaziaException;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
@@ -20,6 +21,39 @@ public class Lista<E> {
     public Lista() {
     }
 
+    
+    public void ordenar(Comparator<E> comparator) {
+        if (tamanho <= 1) {
+            return; // Lista já está ordenada
+        }
+
+        // Começa a ordenação
+        No<E> atual = primeiro;
+
+        while (atual != null) {
+            No<E> minNo = atual;
+            No<E> buscador = atual.getProximo();
+
+            // Encontra o menor elemento na parte não ordenada
+            while (buscador != null) {
+                if (comparator.compare(buscador.getElemento(), minNo.getElemento()) < 0) {
+                    minNo = buscador;
+                }
+                buscador = buscador.getProximo();
+            }
+
+            // Troca os elementos se necessário
+            if (minNo != atual) {
+                E temp = atual.getElemento();
+                atual.setElemento(minNo.getElemento());
+                minNo.setElemento(temp);
+            }
+
+            // Avança para o próximo elemento
+            atual = atual.getProximo();
+        }
+    }
+    
     public boolean adicionar(E elemento) {
         return adicionarUltimo(elemento);
     }

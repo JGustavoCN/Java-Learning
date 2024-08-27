@@ -3,7 +3,9 @@ package br.edu.ifs.ed.estruturas.dinamica;
 import br.edu.ifs.ed.estruturas.dinamica.simples.Fila;
 import br.edu.ifs.ed.estruturas.dinamica.simples.Lista;
 import br.edu.ifs.ed.estruturas.dinamica.simples.Pilha;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.UUID;
 
 /**
  *
@@ -12,10 +14,35 @@ import java.util.LinkedList;
 public class TesteLigados {
 
     public static void main(String[] args) {
+        UUID id;
+        
+        id = UUID.randomUUID();
+        System.out.println(id);
+        id = UUID.nameUUIDFromBytes("Paracetamol".toUpperCase().getBytes());
+        System.out.println(id.compareTo(
+                UUID.nameUUIDFromBytes(
+                        "PAracetamol".toUpperCase().getBytes()
+                )
+        ));
+        
+        Lista<String> lista = new Lista();
+        
+        
+        lista.adicionar("d");
+        lista.adicionar("c");
+        lista.adicionar("b");
+        lista.adicionar("a");
+        lista.adicionar("z");
+        lista.adicionar("y");
+        System.out.println(lista);
+        lista.ordenar((String p1, String p2) -> p1.compareToIgnoreCase(p2));
+        System.out.println(lista);
+        
+        
         System.out.println("==================================");
 
         System.out.println("==================================");
-        Lista<String> lista = new Lista();
+        
         LinkedList lista2 = new LinkedList();
 
         lista.adicionar("1");
