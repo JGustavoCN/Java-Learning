@@ -2,9 +2,9 @@ package br.edu.ifs.pp.atividades.um.fabricas;
 
 import br.edu.ifs.pp.atividades.um.moveis.Movel;
 import br.edu.ifs.pp.atividades.um.moveis.TiposDeMoveis;
-import br.edu.ifs.pp.atividades.um.moveis.artdeco.*;
+import br.edu.ifs.pp.atividades.um.moveis.moderno.*;
 
-public class ArtDecoMovelFactory implements MovelFactory {
+public class ModernaMovelFactory implements MovelFactory {
 
     @Override
     public Movel createMovel(String tipoDeMovel) {
@@ -15,14 +15,14 @@ public class ArtDecoMovelFactory implements MovelFactory {
     public Movel createMovel(TiposDeMoveis tipoDeMovel) {
         switch (tipoDeMovel) {
             case CADEIRA:
-                return new CadeiraArtDeco();
+                return new CadeiraModerna();
             case MESA_DE_CENTRO:
-                return new MesaDeCentroArtDeco();
+                return new MesaDeCentroModerna();
             case SOFA:
-                return new SofaArtDeco();
+                return new SofaModerno();
             default:
                 return null;
         }
     }
-
 }
+
