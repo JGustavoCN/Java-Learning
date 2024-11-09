@@ -1,9 +1,6 @@
 package br.edu.ifs.pp.atividades.um;
 
-import br.edu.ifs.pp.atividades.um.fabricas.ArtDecoMovelFactory;
-import br.edu.ifs.pp.atividades.um.fabricas.ModernaMovelFactory;
-import br.edu.ifs.pp.atividades.um.fabricas.MovelFactory;
-import br.edu.ifs.pp.atividades.um.fabricas.VitorianoMovelFactory;
+import br.edu.ifs.pp.atividades.um.fabricas.*;
 import br.edu.ifs.pp.atividades.um.moveis.Movel;
 import br.edu.ifs.pp.atividades.um.moveis.TiposDeMoveis;
 
