@@ -15,6 +15,7 @@ class No {
     }
 
 }
+
 public class ArvoreBinariaBusca {
 
     No raiz;
@@ -25,6 +26,70 @@ public class ArvoreBinariaBusca {
 
     public No getRaiz() {
         return raiz;
+    }
+
+    public void is(int e){
+        if (raiz == null) raiz = new No(e);
+        
+        No noAtual = raiz;
+        while(true){
+            if (e < noAtual.elemento) {
+                if(noAtual.esquerdo == null){
+                    noAtual.esquerdo = new No(e);
+                    return;
+                }else{
+                    noAtual = noAtual.esquerdo;
+                }
+            }else if(e > noAtual.elemento){
+                if(noAtual.direito == null){
+                    noAtual.direito = new No(e);
+                    return;
+                }else{
+                    noAtual = noAtual.direito;
+                }
+            }else{
+                return;
+            }
+        }
+    }
+    
+    
+    public void i(int e) {
+        // Se a árvore estiver vazia, o novo nó é a raiz.
+        if (raiz == null) {
+            raiz = new No(e);
+            return;
+        }
+
+        // Percorrendo a árvore para encontrar a posição de inserção.
+        No noAtual = raiz;
+        while (true) {
+            // Se o elemento é menor, vai para o subárvore esquerda
+            if (e < noAtual.elemento) {
+                // Se não tem filho à esquerda, insere aqui
+                if (noAtual.esquerdo == null) {
+                    noAtual.esquerdo = new No(e);
+                    noAtual.esquerdo.pai = noAtual;
+                    return;
+                }
+                // Caso contrário, continua procurando na subárvore esquerda
+                noAtual = noAtual.esquerdo;
+            } // Se o elemento é maior ou igual, vai para o subárvore direita
+            else if (e > noAtual.elemento) {
+                // Se não tem filho à direita, insere aqui
+                if (noAtual.direito == null) {
+                    noAtual.direito = new No(e);
+                    noAtual.direito.pai = noAtual;
+                    return;
+                }
+                // Caso contrário, continua procurando na subárvore direita
+                noAtual = noAtual.direito;
+            } // Caso o valor já exista na árvore, não faz nada
+            else {
+                return;  // Não insere elementos duplicados
+            }
+        }
+
     }
 
     public void inserir(int e) {

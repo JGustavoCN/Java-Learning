@@ -1,8 +1,8 @@
-package br.edu.ifs.pp.atividades.um.fabricas;
+package br.edu.ifs.pp.atividades.factory.fabricas;
 
-import br.edu.ifs.pp.atividades.um.moveis.Movel;
-import br.edu.ifs.pp.atividades.um.moveis.TiposDeMoveis;
-import br.edu.ifs.pp.atividades.um.moveis.moderno.*;
+import br.edu.ifs.pp.atividades.factory.moveis.Movel;
+import br.edu.ifs.pp.atividades.factory.moveis.TiposDeMoveis;
+import br.edu.ifs.pp.atividades.factory.moveis.moderno.*;
 
 public class ModernaMovelFactory implements MovelFactory {
 

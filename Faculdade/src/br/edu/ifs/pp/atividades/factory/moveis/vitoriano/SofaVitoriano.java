@@ -1,6 +1,6 @@
-package br.edu.ifs.pp.atividades.um.moveis.vitoriano;
+package br.edu.ifs.pp.atividades.factory.moveis.vitoriano;
 
-import br.edu.ifs.pp.atividades.um.moveis.Movel;
+import br.edu.ifs.pp.atividades.factory.moveis.Movel;
 
 public class SofaVitoriano extends Movel {
 

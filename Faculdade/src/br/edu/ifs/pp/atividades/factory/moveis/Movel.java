@@ -1,4 +1,4 @@
-package br.edu.ifs.pp.atividades.um.moveis;
+package br.edu.ifs.pp.atividades.factory.moveis;
 
 
 // Classe abstrata para representar um produto de móvel

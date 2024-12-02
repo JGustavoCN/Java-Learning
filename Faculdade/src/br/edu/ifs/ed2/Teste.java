@@ -17,13 +17,14 @@ public class Teste {
         b.inserir(2);
         b.inserir(7);
         b.inserir(4);
-        b.inserir(10);
+        b.inserir(12);
         b.inserir(1);
         b.inserir(3);
         b.inserir(8);
         b.inserir(9);
-        b.inserir(11);
-        b.inserir(6);
+        b.is(10);
+        b.is(8);
+        b.is(9);
         b.percorrerPreOrdem();
         System.out.println("\n---------------------");
         b.percorrerOrdem();
