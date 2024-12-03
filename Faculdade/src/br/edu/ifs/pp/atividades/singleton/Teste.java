@@ -17,6 +17,7 @@ public class Teste {
         // Não é possivel acessar diretamente, mas    
         //LogSingletonEager = new LogSingletonEager();
         LogSingletonEager primeiraInstancia = LogSingletonEager.getInstace();
+        // Reflexição
         Constructor<LogSingletonEager> constructorDoSingleton = LogSingletonEager.class.getDeclaredConstructor();
         constructorDoSingleton.setAccessible(true);
         LogSingletonEager segundaInstancia = constructorDoSingleton.newInstance();

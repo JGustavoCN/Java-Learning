@@ -29,8 +29,10 @@ public class LogSingletonLazy {
      */
     private static volatile LogSingletonLazy instace;
 
+    private String log;
+    
     private LogSingletonLazy() {
-
+        log = "Log: ";
     }
 
 // Poderia ser assim mas não é eficiente public static synchronized LogSingletonLazy getInstace()
@@ -49,4 +51,9 @@ public class LogSingletonLazy {
         }
         return instace;
     }
+    
+    public void log(String log){
+        this.log += log;
+    }
+    
 }

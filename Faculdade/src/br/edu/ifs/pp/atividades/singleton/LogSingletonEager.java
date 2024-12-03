@@ -16,13 +16,21 @@ package br.edu.ifs.pp.atividades.singleton;
  * 
  */
 public class LogSingletonEager {
+    
     private static final LogSingletonEager INSTACE = new LogSingletonEager();
     
+    private String log;
+    
     private LogSingletonEager(){
-        
+        log = "Log: ";
     }
     
-    public static synchronized LogSingletonEager getInstace(){
+    public static LogSingletonEager getInstace(){
         return INSTACE;
     }
+    
+    public void log(String log){
+        this.log += log;
+    }
+    
 }
