@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  */
 public class Teste {
     public static void main(String[] args) {
-        ArvoreBinariaBusca b = new ArvoreBinariaBusca();
+        BST b =new BST();
         b.inserir(5);
         b.inserir(2);
         b.inserir(7);
@@ -22,14 +22,12 @@ public class Teste {
         b.inserir(3);
         b.inserir(8);
         b.inserir(9);
-        b.is(10);
-        b.is(8);
-        b.is(9);
-        b.percorrerPreOrdem();
+        System.out.println(b.percorrerPreOrdem());
         System.out.println("\n---------------------");
-        b.percorrerOrdem();
+        System.out.println(b.percorrerOrdem());
         System.out.println("\n---------------------");
-        b.percorrerPosOrdem();
+        System.out.println(b.percorrerPosOrdem());
+        System.out.println("\n---------------------");
         
         
          // Criando a janela principal
@@ -38,9 +36,5 @@ public class Teste {
         janela.setSize(1000, 800);
         janela.setLocationRelativeTo(null);
 
-        // Criando o painel de exibição e adicionando a árvore
-        ArvoreBinariaVisualizacao painel = new ArvoreBinariaVisualizacao(b);
-        janela.add(painel);
-        janela.setVisible(true);
     }
 }
