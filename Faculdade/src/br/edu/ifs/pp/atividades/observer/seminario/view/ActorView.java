@@ -30,7 +30,7 @@ public class ActorView extends JInternalFrame {
         // Painel central para imagem
         JLabel imageLabel = new JLabel();
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon originalIcon = new ImageIcon("src\\\\br\\\\edu\\\\ifs\\\\pp\\\\atividades\\\\observer\\\\seminario\\\\resource\\\\ator.png");
+        ImageIcon originalIcon = new ImageIcon("src\\br\\edu\\ifs\\pp\\atividades\\observer\\seminario\\resource\\agent.png");
         Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(scaledImage));
 
